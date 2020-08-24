@@ -34,6 +34,8 @@ def register(request):
             password = password,
         )
         user.save()
-        messages.success(request, f"User {act[0].username} created successfully.")
+        messages.success(request, f"User @{act[0].username} created successfully.")
+        auth.login(request, user)
+        messages.success(request, f"You are logged in as @{act[0].username}.")
         return redirect('/')
     return render(request, "register.html", context)

@@ -9,9 +9,18 @@
             <li class="nav-item {{home_page}}">
                 <a href="/" class="nav-link">Home</a>
             </li>
-            <li class="nav-item">
-                <a href="register" class="nav-link {{register_page}}">Register</a>
-            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="userpage" class="nav-link {{user_page}}">{{user.username}}</a>
+                </li>
+                <li class="nav-item">
+                    <a href="logout" class="nav-link">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a href="register" class="nav-link {{register_page}}">Register</a>
+                </li>
+            {% endif %}
             <li class="nav-item">
                 <a href="contact" class="nav-link {{login_page}}">Contact</a>
             </li>
