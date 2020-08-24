@@ -8,19 +8,28 @@
 
             <div class="form-group">
                 <label for="fname-input">First name <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="fname-input" placeholder="Your First name here" required>
+                <input type="text" class="form-control" id="fname-input" name="first_name" placeholder="Your First name here" required>
             </div>
             <div class="form-group">
                 <label for="lname-input">Last name</label>
-                <input type="text" class="form-control" id="lname-input" placeholder="Your Last name here">
+                <input type="text" class="form-control" id="lname-input" name="last_name" placeholder="Your Last name here">
             </div>
             <div class="form-group">
                 <label for="email-input">Email address <span class="text-danger">*</span></label>
-                <input type="email" class="form-control" id="email-input" placeholder="Your email here" required>
+                <input type="email" class="form-control" id="email-input" name="email" placeholder="Your email here" required>
+            </div>
+            <div class="form-group">
+                <label for="user-input">Username<span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">@</div>
+                    </div>
+                    <input type="text" class="form-control" id="user-input" name="username" placeholder="Unique username here" pattern="^[a-z0-9_]+$" required>
+                </div>
             </div>
             <div class="form-group">
                 <label for="pwd-input">Password <span class="text-danger">*</span></label>
-                <input type="password" class="form-control" id="pwd-input" placeholder="Password" pattern="^(?=.*[A-Za-z])(?=.*[0-9]).{8,32}$" required>
+                <input type="password" class="form-control" id="pwd-input" name="password" placeholder="Password" pattern="^(?=.*[A-Za-z])(?=.*[0-9]).{8,32}$" required>
                 <small class="form-text text-muted">Password must be 8-20 charectors long and have atleast 1 digit and an alphabet.</small>
             </div>
             <div class="form-group">
