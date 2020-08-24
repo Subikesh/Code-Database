@@ -20,7 +20,7 @@ def register(request):
         act = User.objects.filter(email = mail)
         if act.exists():
             messages.info(request, f"Account exists for this email with the username {act[0].username}.")
-            return redirect('/login')
+            return redirect('/')
 
         if User.objects.filter(username = username).exists():
             messages.error(request, f"Username @{username} is already taken. Try another one.")
@@ -37,7 +37,3 @@ def register(request):
         messages.success(request, f"User {act[0].username} created successfully.")
         return redirect('/')
     return render(request, "register.html", context)
-
-def login(request):
-    context = {'login_page': 'active'}
-    return render(request, "login.html", context)
