@@ -12,6 +12,7 @@ def homepage(request):
         user = auth.authenticate(username= username, password= password)
         if user is not None:
             auth.login(request, user)
+            return redirect("/")
         else:
             messages.error(request, "Username or password is incorrect. Try again with correct credentials.")
     return render(request, "home.html", context)
@@ -47,3 +48,7 @@ def register(request):
         messages.success(request, f"You are logged in as @{act[0].username}.")
         return redirect('/')
     return render(request, "register.html", context)
+
+def logout(request):
+    auth.logout(request)
+    return redirect("/")
