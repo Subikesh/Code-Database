@@ -1,42 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <!-- Main Content -->
-            <div class="col-lg-6 col-xs-7">
-                <h1 class="page-header display-4">Code database</h1>
-                <p>The home page content of this page goes here.</p>
-            </div>
-            <!-- Login page -->
-            <div class="col-lg-6 col-xs-5">
-                <h1 class="page-header">Login</h1>
-                <form action="login" method="post">
-                    {% csrf_token %}
-                    <div class="form-group row">
-                        <label for="email-input" class="col-form-label col-sm-3">Email/Username</label>
-                        <div class="col-sm-9">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">@</div>
-                                </div>
-                                <input type="text" class="form-control" id="user-input" name="username" placeholder="Your username here" pattern="^[a-z0-9_]+$" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="pwd-input" class="col-form-label col-sm-3">Password</label>
-                        <div class="col-sm-9">
-                            <input type="password" class="form-control" id="pwd-input" placeholder="Password" pattern="^(?=.*[A-Za-z])(?=.*[0-9]).{8,32}$" name="password" required>
-                        </div>
-                    </div>
-                    
-                    <button class="btn btn-primary" type="submit">Submit</button>
-                    <br>
-                    <div class="form-text">Don't have an account? <a href="register">Sign Up</a></div>
-                    <a class="form-text">Forgot password</a>
-                </form>
-            </div>
+    {% if user.is_authenticated %}
+        <div class="container">
+            <h1 class="page-header display-4">Code database</h1>
+            <p>You have successfully logged in the page. All the content specific to {{user.first_name}} {{user.last_name}} goes here.</p>
         </div>
-    </div>
+    {% else %}
+        {% include "account/login.html" %}
+    {% endif %}
+    
 {% endblock %}

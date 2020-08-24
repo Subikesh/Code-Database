@@ -7,14 +7,15 @@ from django.contrib import messages
 def homepage(request):
     context = {'home_page': 'active'}
     if request.method == 'POST':
-        username        = request.POST.get('email')
+        user_name       = request.POST.get('username')
         password        = request.POST.get('password')
-        user = auth.authenticate(username= username, password= password)
+        user = auth.authenticate(username= user_name, password= password)
         if user is not None:
             auth.login(request, user)
+            messages.success(request, f"You are logged in as @{user_name}.")
             return redirect("/")
         else:
-            messages.error(request, "Username or password is incorrect. Try again with correct credentials.")
+            messages.error(request, "Incorrect username or password")
     return render(request, "home.html", context)
 
 def register(request):
