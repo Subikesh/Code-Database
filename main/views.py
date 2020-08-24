@@ -6,6 +6,14 @@ from django.contrib import messages
 # Create your views here.
 def homepage(request):
     context = {'home_page': 'active'}
+    if request.method == 'POST':
+        username        = request.POST.get('email')
+        password        = request.POST.get('password')
+        user = auth.authenticate(username= username, password= password)
+        if user is not None:
+            auth.login(request, user)
+        else:
+            messages.error(request, "Username or password is incorrect. Try again with correct credentials.")
     return render(request, "home.html", context)
 
 def register(request):
