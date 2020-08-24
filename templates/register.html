@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="page-header">Register</h1>
+        <form action="register" method="post" class="">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="fname-input">First name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="fname-input" placeholder="Your First name here" required>
+            </div>
+            <div class="form-group">
+                <label for="lname-input">Last name</label>
+                <input type="text" class="form-control" id="lname-input" placeholder="Your Last name here">
+            </div>
+            <div class="form-group">
+                <label for="email-input">Email address <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="email-input" placeholder="Your email here" required>
+            </div>
+            <div class="form-group">
+                <label for="pwd-input">Password <span class="text-danger">*</span></label>
+                <input type="password" class="form-control" id="pwd-input" placeholder="Password" pattern="^(?=.*[A-Za-z])(?=.*[0-9]).{8,32}$" required>
+                <small class="form-text text-muted">Password must be 8-20 charectors long and have atleast 1 digit and an alphabet.</small>
+            </div>
+            <div class="form-group">
+                <label for="cnf-pwd">Confirm Password <span class="text-danger">*</span></label>
+                <input type="password" class="form-control" id="cnf-pwd" placeholder="Retype password" pattern="^(?=.*[A-Za-z])(?=.*[0-9]).{8,32}$" required>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+        <br>
+        If you already have an account, please <a href="login">login here</a>.
+    </div>
+{% endblock %}

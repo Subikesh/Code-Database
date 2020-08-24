@@ -6,5 +6,8 @@
     padding-top: 13px;
     padding-bottom: 13px;
     margin-bottom: 30px;
-    font-size: 1.3rem;
+    font-size: 1.25rem;
+}
+.page-header {
+    margin-bottom: 25px;
 }
