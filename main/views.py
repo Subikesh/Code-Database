@@ -50,6 +50,18 @@ def register(request):
         return redirect('/')
     return render(request, "account/register.html", context)
 
+def profile(request):
+    context = {'user_page': "active"}
+    if request.method == "POST":
+        current_user = request.user
+        form = request.POST
+        current_user.first_name = form.get('first_name')
+        current_user.last_name = form.get('last_name')
+        current_user.username = form.get('username')
+        if form.get('password') != None:
+            current_user.password = form.get('password')
+    return render(request, "account/profile.html", context)
+
 def logout(request):
     current_user = request.user
     auth.logout(request)
