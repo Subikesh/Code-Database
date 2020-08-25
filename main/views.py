@@ -58,9 +58,17 @@ def profile(request):
         current_user.first_name = form.get('first_name')
         current_user.last_name = form.get('last_name')
         current_user.username = form.get('username')
-        if form.get('password') != None:
-            current_user.password = form.get('password')
+        if form.get('password') != '':
+            current_user.set_password(form.get('password'))
+        current_user.save()
     return render(request, "account/profile.html", context)
+
+def delete(request):
+    current_user = request.user
+    current_user.delete()
+    logout(request)
+    messages.info(request, f"@{current_user} account is deleted")
+    return redirect("/")
 
 def logout(request):
     current_user = request.user
