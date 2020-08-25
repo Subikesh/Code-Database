@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 
-# Create your views here.
+# Display the main content and user login page
 def homepage(request):
     context = {'home_page': 'active'}
     if request.method == 'POST':
@@ -18,6 +18,7 @@ def homepage(request):
             messages.error(request, "Incorrect username or password")
     return render(request, "home.html", context)
 
+# User registration and validation username and email. 
 def register(request):
     context = {'register_page': 'active'}
     if request.method == 'POST':
@@ -50,19 +51,28 @@ def register(request):
         return redirect('/')
     return render(request, "account/register.html", context)
 
+# User logout
+def logout(request):
+    current_user = request.user
+    auth.logout(request)
+    messages.success(request, f"@{current_user} has been logged out.")
+    return redirect("/")
+
+# Editing and updating user information
 def profile(request):
     context = {'user_page': "active"}
     if request.method == "POST":
         current_user = request.user
         form = request.POST
         current_user.first_name = form.get('first_name')
-        current_user.last_name = form.get('last_name')
-        current_user.username = form.get('username')
+        current_user.last_name  = form.get('last_name')
+        current_user.username   = form.get('username')
         if form.get('password') != '':
             current_user.set_password(form.get('password'))
         current_user.save()
     return render(request, "account/profile.html", context)
 
+# Deleting user account
 def delete(request):
     current_user = request.user
     current_user.delete()
@@ -70,8 +80,3 @@ def delete(request):
     messages.info(request, f"@{current_user} account is deleted")
     return redirect("/")
 
-def logout(request):
-    current_user = request.user
-    auth.logout(request)
-    messages.success(request, f"@{current_user} has been logged out.")
-    return redirect("/")
