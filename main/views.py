@@ -29,7 +29,7 @@ def register(request):
         
         act = User.objects.filter(email = mail)
         if act.exists():
-            messages.info(request, f"Account exists for this email with the username {act[0].username}.")
+            messages.info(request, f"Account exists for this email with the username @{act[0].username}.")
             return redirect('/')
 
         if User.objects.filter(username = username).exists():
@@ -48,8 +48,10 @@ def register(request):
         auth.login(request, user)
         messages.success(request, f"You are logged in as @{act[0].username}.")
         return redirect('/')
-    return render(request, "register.html", context)
+    return render(request, "account/register.html", context)
 
 def logout(request):
+    current_user = request.user
     auth.logout(request)
+    messages.success(request, f"@{current_user} has been logged out.")
     return redirect("/")
