@@ -20,7 +20,7 @@ class Question(models.Model):
     link            = models.URLField(null = True, blank = True)
     difficulty      = models.TextField(max_length = 10, choices = difficulty_choices)
     tag             = models.ManyToManyField(Tag)
-    Other           = models.TextField(null = True, blank = True)
+    examples        = models.TextField(null = True, blank = True)
 
     def __str__(self):
         return self.title

@@ -8,9 +8,11 @@
     margin-bottom: 30px;
     font-size: 1.25rem;
 }
-.page-header {
+.page-header, .container {
     margin-bottom: 25px;
 }
+
+/* Toasts */
 .toasts {
     position: absolute;
     right: 30px;
