@@ -5,6 +5,7 @@
         <div class="container">
             <h1 class="page-header display-4">Code database</h1>
             <p>You have successfully logged in the page. All the content specific to {{user.first_name}} {{user.last_name}} goes here.</p>
+            <a class="btn btn-primary" href="add_question">Add new question</a>
         </div>
     {% else %}
         {% include "account/login.html" %}

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
+from .forms import QuestionForm
 
 # Display the main content and user login page
 def homepage(request):
@@ -80,3 +81,14 @@ def delete(request):
     messages.info(request, f"@{current_user} account is deleted")
     return redirect("/")
 
+def add_question(request):
+    if request.method == "POST":
+        form = QuestionForm(request.POST)
+        if form.is_valid:
+            form.save(commit=False)
+            form.fields['user'] = request.user
+            form.save()
+            messages.success(request, f"Question {request.POST.get('title')} is saved")
+    form = QuestionForm()
+    fields = dict(zip(form.fields.keys(), form))
+    return render(request, "question.html", {"fields": fields})
