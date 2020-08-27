@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from .forms import QuestionForm
+from . import models
 
 # Display the main content and user login page
 def homepage(request):
@@ -84,11 +85,15 @@ def delete(request):
 def add_question(request):
     if request.method == "POST":
         form = QuestionForm(request.POST)
-        if form.is_valid:
-            instance = form.save(commit=False)
-            instance.user = request.user
-            instance.save()
-            messages.success(request, f"Question {request.POST.get('title')} is saved")
+        if form.is_valid():
+            if models.Question.objects.filter(title=form.cleaned_data['title']).filter(user=request.user).exists():
+                messages.error(request, f"Question \"{form.cleaned_data['title']}\" already exists.")
+            else:
+                instance = form.save(commit=False)
+                instance.user = request.user
+                instance.save()
+                messages.success(request, f"Question {request.POST.get('title')} is saved")
+
     form = QuestionForm()
     fields = dict(zip(form.fields.keys(), form))
-    return render(request, "question.html", {"fields": fields})
+    return render(request, "question.html", {"fields": fields, "form":form})

@@ -17,7 +17,7 @@ class Question(models.Model):
     user            = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="User", on_delete = models.CASCADE)
     title           = models.CharField(max_length = 200)
     description     = models.TextField(null = True, blank = True)
-    link            = models.URLField(null = True, blank = True, unique=True)
+    link            = models.URLField(null = True, blank = True)
     difficulty      = models.TextField(max_length = 10, choices = difficulty_choices)
     tag             = models.ManyToManyField(Tag)
     examples        = models.TextField(null = True, blank = True)
