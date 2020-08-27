@@ -5,7 +5,7 @@ class QuestionForm(forms.ModelForm):
 
     class Meta:
         model = Question
-        fields = ["user", "title", "link", "description", "difficulty", "tag", "examples"]
+        fields = ["title", "link", "description", "difficulty", "tag", "examples"]
 
         widgets = {
             "title": forms.TextInput(attrs={"class": "form-control"}),

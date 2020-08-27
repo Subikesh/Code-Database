@@ -85,9 +85,9 @@ def add_question(request):
     if request.method == "POST":
         form = QuestionForm(request.POST)
         if form.is_valid:
-            form.save(commit=False)
-            form.fields['user'] = request.user
-            form.save()
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
             messages.success(request, f"Question {request.POST.get('title')} is saved")
     form = QuestionForm()
     fields = dict(zip(form.fields.keys(), form))
