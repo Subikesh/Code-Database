@@ -9,13 +9,13 @@
         <form action="add_question" method="post">
             {% csrf_token %}
             {% for key, value in fields.items %}
-                <div class="form-group row">
-                    <div class="col-md-2">
+            <div class="form-group row">
+                <div class="col-md-2">
                         <label for="id_{{key}}">{{key.capitalize}}</label>
                     </div>
                     <div class="col-md-10">{{value}}</div>
                 </div>
-            {% endfor %} 
+                {% endfor %} 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>

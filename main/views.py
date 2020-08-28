@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
+from django import forms
 from .forms import QuestionForm
 from . import models
 
@@ -84,16 +85,16 @@ def delete(request):
 
 def add_question(request):
     if request.method == "POST":
-        form = QuestionForm(request.POST)
+        form = QuestionForm(request.POST, user=request.user)
         if form.is_valid():
-            if models.Question.objects.filter(title=form.cleaned_data['title']).filter(user=request.user).exists():
-                messages.error(request, f"Question \"{form.cleaned_data['title']}\" already exists.")
-            else:
-                instance = form.save(commit=False)
-                instance.user = request.user
-                instance.save()
-                messages.success(request, f"Question {request.POST.get('title')} is saved")
-
-    form = QuestionForm()
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            messages.success(request, f"Question {request.POST.get('title')} is saved")
+        else:
+            for error in form.errors.values():
+                messages.error(request, error.as_text()[2:])
+    else:
+        form = QuestionForm()
     fields = dict(zip(form.fields.keys(), form))
     return render(request, "question.html", {"fields": fields, "form":form})

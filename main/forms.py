@@ -3,6 +3,10 @@ from .models import Question, Solution
 
 class QuestionForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(QuestionForm, self).__init__(*args, **kwargs)
+    
     class Meta:
         model = Question
         fields = ["title", "link", "description", "difficulty", "tag", "examples"]
@@ -16,4 +20,8 @@ class QuestionForm(forms.ModelForm):
             "examples": forms.Textarea(attrs={"class": "form-control"})
         }
         
-
+    def clean_title(self):
+        title = self.cleaned_data.get("title")
+        if Question.objects.filter(title=title).filter(user=self.user).exists():
+            raise forms.ValidationError("The question '%s' already exists" %(title))
+        return title
