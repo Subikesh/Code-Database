@@ -3,9 +3,29 @@
 {% block content %}
     {% if user.is_authenticated %}
         <div class="container">
-            <h1 class="page-header display-4">Code database</h1>
-            <p>You have successfully logged in the page. All the content specific to {{user.first_name}} {{user.last_name}} goes here.</p>
-            <a class="btn btn-primary" href="add_question">Add new question</a>
+            <!-- <h1 class="page-header display-4">Code database</h1>
+            <p>You have successfully logged in the page. All the content specific to {{user.first_name}} {{user.last_name}} goes here.</p> -->
+            <a class="float-right btn btn-primary" href="add_question">Add new question</a>
+            <h2 class="text-center pb-5">Latest Problems</h3>
+            <div class="card-column problems text-center">
+                <div class="row">
+                    {% for question in questions %}
+                        <div class="col-sm-6 col-md-4 item">
+                            <div class="card sh-{{question.difficulty|lower}} text-dark">
+                                <h4 class="card-header text-center">{{question.title}}</h3>
+                                <div class="card-body">
+                                    {% if question.description|length > 100 %}
+                                        <p class="card-text description">{{ question.description|slice:97 }}...</p>
+                                    {% else %}
+                                        <p class="card-text description">{{question.description}}</p>
+                                    {% endif %}
+                                    <a href="view-question"><i class="fa fa-arrow-circle-right fa-lg"></i></a>
+                                    </div>
+                            </div>  
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     {% else %}
         {% include "account/login.html" %}

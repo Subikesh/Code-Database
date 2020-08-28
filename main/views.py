@@ -9,16 +9,21 @@ from . import models
 # Display the main content and user login page
 def homepage(request):
     context = {'home_page': 'active'}
-    if request.method == 'POST':
-        user_name       = request.POST.get('username')
-        password        = request.POST.get('password')
-        user = auth.authenticate(username= user_name, password= password)
-        if user is not None:
-            auth.login(request, user)
-            messages.success(request, f"You are logged in as @{user_name}.")
-            return redirect("/")
-        else:
-            messages.error(request, "Incorrect username or password")
+    if request.user.is_authenticated:
+        # Home page after logged in
+        context['questions'] = models.Question.objects.all()
+    else:
+        # Home page to let user login
+        if request.method == 'POST':
+            user_name       = request.POST.get('username')
+            password        = request.POST.get('password')
+            user = auth.authenticate(username= user_name, password= password)
+            if user is not None:
+                auth.login(request, user)
+                messages.success(request, f"You are logged in as @{user_name}.")
+                return redirect("/")
+            else:
+                messages.error(request, "Incorrect username or password")
     return render(request, "home.html", context)
 
 # User registration and validation username and email. 
