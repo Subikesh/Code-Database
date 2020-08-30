@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django import forms
 from .forms import QuestionForm
 from . import models
+import urllib
 
 # Display the main content and user login page
 def homepage(request):
@@ -103,3 +104,10 @@ def add_question(request):
         form = QuestionForm()
     fields = dict(zip(form.fields.keys(), form))
     return render(request, "question.html", {"fields": fields, "form":form})
+
+def view_question(request, question_id):
+    try:
+        question = models.Question(pk=question_id)
+    except models.Question.DoesNotExist:
+        raise Http404(f"Question {question_id} does not exist.")
+    return HttpResponse(f"We are in {question.title} page.")
