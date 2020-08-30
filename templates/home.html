@@ -12,14 +12,16 @@
                     {% for question in questions %}
                         <div class="col-sm-6 col-md-4 item">
                             <div class="card mb-3 sh-{{question.difficulty|lower}} text-dark">
-                                <h4 class="card-header text-center">{{question.title}}</h3>
+                                <a href="questions/{{question.pk}}">
+                                    <h4 class="card-header text-center">{{question.title}}</h3>
+                                </a>
                                 <div class="card-body">
                                     {% if question.description|length > 100 %}
                                         <p class="card-text description">{{ question.description|slice:97 }}...</p>
                                     {% else %}
                                         <p class="card-text description">{{question.description}}</p>
                                     {% endif %}
-                                    <a href="questions/{{question.pk}}"><i class="fa fa-arrow-circle-right fa-lg"></i></a>
+                                    <a class="icon" href="questions/{{question.pk}}"><i class="fa fa-arrow-circle-right fa-lg"></i></a>
                                     </div>
                             </div>  
                         </div>

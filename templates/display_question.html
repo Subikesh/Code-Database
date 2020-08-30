@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <a href="/" class="btn btn-info float-right">Edit <i class="fas fa-edit"></i></a>
+        <h1>{{question.title}}</h1>
+        <strong class="bg-{{question.difficulty|lower}}">{{question.difficulty}}</strong>
+        <hr>
+        <p>
+            {{question.description}}
+        </p>
+        {% for solution in solutions %}
+            <hr>
+            <div class="solution-section">
+                <h3>{{solution.title}} <span class="badge">{{solution.language}}</span></h3>
+                <div class="solution-code">{{solution.program}}</div>
+                <div class="solution-notes">{{solution.notes}}</div>
+                {% if solution.link is not none %}
+                    <a href="{{solution.link}}" class="btn btn-primary" target="_blank">Goto solution</a>
+                {% endif %} 
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

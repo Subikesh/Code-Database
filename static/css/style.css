@@ -1,3 +1,11 @@
+a {
+    color: inherit;
+}
+a:hover {
+    color: rgb(39, 39, 39);
+    text-decoration: none;
+}
+
 /* navbar */
 .navbar-brand {
     font-size: 1.7rem;
@@ -36,6 +44,13 @@
 }
 
 /* Problems page */
+.icon {
+    color: #007bff;
+}
+.icon:hover {
+    color: #0056b3;
+}
+
 .card.sh-easy {
     box-shadow: 0px 0px 12px -4px green;
 }
@@ -44,4 +59,15 @@
 }
 .card.sh-hard {
     box-shadow: 0px 0px 12px -4px red;
+}
+
+/* Question display page */
+.bg-easy {
+    color: green;
+}
+.bg-medium {
+    color: orange;
+}
+.bg-hard {
+    color: red;
 }

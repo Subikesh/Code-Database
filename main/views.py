@@ -106,8 +106,12 @@ def add_question(request):
     return render(request, "question.html", {"fields": fields, "form":form})
 
 def view_question(request, question_id):
+    context = {}
     try:
-        question = models.Question(pk=question_id)
+        question = models.Question.objects.get(pk=question_id)
+        solutions = models.Solution.objects.filter(question = question)
+        context['question'] = question
+        context['solutions'] = solutions
     except models.Question.DoesNotExist:
         raise Http404(f"Question {question_id} does not exist.")
-    return HttpResponse(f"We are in {question.title} page.")
+    return render(request, "display_question.html", context)
