@@ -7,11 +7,11 @@
             <p>You have successfully logged in the page. All the content specific to {{user.first_name}} {{user.last_name}} goes here.</p> -->
             <a class="float-right btn btn-primary" href="add_question">Add new question</a>
             <h2 class="text-center pb-5">Latest Problems</h3>
-            <div class="card-column problems text-center">
+            <div class="card-group problems text-center">
                 <div class="row">
                     {% for question in questions %}
                         <div class="col-sm-6 col-md-4 item">
-                            <div class="card sh-{{question.difficulty|lower}} text-dark">
+                            <div class="card mb-3 sh-{{question.difficulty|lower}} text-dark">
                                 <h4 class="card-header text-center">{{question.title}}</h3>
                                 <div class="card-body">
                                     {% if question.description|length > 100 %}

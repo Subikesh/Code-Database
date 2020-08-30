@@ -11,7 +11,7 @@ def homepage(request):
     context = {'home_page': 'active'}
     if request.user.is_authenticated:
         # Home page after logged in
-        context['questions'] = models.Question.objects.all()
+        context['questions'] = models.Question.objects.filter(user=request.user)
     else:
         # Home page to let user login
         if request.method == 'POST':

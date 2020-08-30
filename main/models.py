@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from datetime import datetime
 
 class Tag(models.Model):
     name            = models.CharField(max_length = 100)
@@ -21,6 +22,7 @@ class Question(models.Model):
     difficulty      = models.TextField(max_length = 10, choices = difficulty_choices)
     tag             = models.ManyToManyField(Tag)
     examples        = models.TextField(null = True, blank = True)
+    date_added      = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
@@ -32,6 +34,7 @@ class Solution(models.Model):
     program         = models.TextField(null = True, blank = True)
     notes           = models.TextField(null = True, blank = True)
     link            = models.URLField(null = True, blank = True)
+    date_added      = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
