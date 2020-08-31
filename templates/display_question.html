@@ -9,29 +9,31 @@
         <p>
             {{question.description}}
         </p>
+        <h2>Examples</h2>
+        <p>
+            {{question.examples}}
+        </p>
         <!-- Cards collapse using bootstrap -->
         <h2>Solutions</h2>
         <div id="accordion">
-            <div class="card">
-                <div class="card-header" id="headingOne">
-                    <h5 class="mb-0">
-                    <button class="btn" data-toggle="collapse" data-target="#solution1" aria-expanded="false" aria-controls="collapseOne">
-                        Solution 1
-                    </button>
-                    </h5>
+            <div class="card mt-4">
+                <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#solution1" aria-expanded="false" aria-controls="collapseOne">
+                    <h5 class="mb-0">Solution 1</h5>
                 </div>
-            
                 <div id="solution1" class="solution-section collapse" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
                         <div class="row">
                             <select name="language" id="lang-select" class="form-control col-sm-3 ml-auto mr-2 mb-3">
                                 <option value="python">python</option>
                                 <option value="c_cpp">C/C++</option>
-                                <option value="javascript">JavaScript</option>
+                                <option value="javascript" selected>JavaScript</option>
                                 <option value="java">Java</option>
                                 <option value="csharp">C#</option>
                             </select>
-                            <input type="text" class="form-control col-sm-2 mr-2 mb-3" placeholder="font-size">
+                            <span class="input-group col-sm-2 mr-2 mb-3">
+                                <input type="text" id="size-select" class="form-control" placeholder="font-size: 18">
+                                <div class="input-group-append"><a class="input-group-text fa fa-arrow-right"></a> </div>
+                            </span>
                         </div>
                         <div class="parent col-xs-12">
                             <div id="editor">function foo(items) {
@@ -39,6 +41,7 @@
                                 return x;
                             }</div>
                         </div>
+                        <button class="btn btn-primary">Save code</button>
                     </div>
                 </div>
             </div>
