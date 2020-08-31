@@ -1,5 +1,88 @@
+a {
+    color: inherit;
+}
+a:hover {
+    color: rgb(39, 39, 39);
+    text-decoration: none;
+}
+
 /* navbar */
-.navbar-content {
-    max-width: 1400px;
-    margin:auto;
+.navbar-brand {
+    font-size: 1.7rem;
+}
+.navbar {
+    padding-top: 13px;
+    padding-bottom: 13px;
+    margin-bottom: 30px;
+    font-size: 1.25rem;
+}
+.page-header, .container {
+    margin-bottom: 25px;
+}
+
+/* Toasts */
+.toasts {
+    position: absolute;
+    right: 30px;
+    top: 90px;
+}
+.toasts .toast {
+    font-size: 1.2em;
+    font-weight: 500;
+}
+.toast.bg-success {
+    background-color: green;
+}
+.toast.bg-info {
+    background-color: blue;
+}
+.toast.bg-error {
+    background-color: red;
+}
+.toast.bg-warning {
+    background-color: rgb(218, 166, 23);
+}
+
+/* Problems page */
+.icon {
+    color: #007bff;
+}
+.icon:hover {
+    color: #0056b3;
+}
+
+.card.sh-easy {
+    box-shadow: 0px 0px 12px -4px green;
+}
+.card.sh-medium {
+    box-shadow: 0px 0px 12px -4px rgb(255, 136, 0);
+}
+.card.sh-hard {
+    box-shadow: 0px 0px 12px -4px red;
+}
+
+/* Question display page */
+.bg-easy {
+    color: green;
+}
+.bg-medium {
+    color: orange;
+}
+.bg-hard {
+    color: red;
+}
+
+/* Ace-Editor */
+.parent {
+    min-height: 550px;
+    width: 100%;
+    position: relative;
+    display: inline-block;
+}
+#editor {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }

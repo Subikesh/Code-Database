@@ -71,3 +71,18 @@ a:hover {
 .bg-hard {
     color: red;
 }
+
+/* Ace-Editor */
+.parent {
+    min-height: 550px;
+    width: 100%;
+    position: relative;
+    display: inline-block;
+}
+.parent #editor {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
