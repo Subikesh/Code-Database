@@ -29,6 +29,9 @@ def homepage(request):
 
 # User registration and validation username and email. 
 def register(request):
+    if request.user.is_authenticated:
+        messages.warning(request, "You are already logged in.")
+        return redirect('/')
     context = {'register_page': 'active'}
     if request.method == 'POST':
         username        = request.POST.get('username')
@@ -62,6 +65,9 @@ def register(request):
 
 # User logout
 def logout(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "You are not logged in yet.")
+        return redirect("/")
     current_user = request.user
     auth.logout(request)
     messages.success(request, f"@{current_user} has been logged out.")
@@ -69,6 +75,9 @@ def logout(request):
 
 # Editing and updating user information
 def profile(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "You are not logged in yet.")
+        return redirect("/")
     context = {'user_page': "active"}
     if request.method == "POST":
         current_user = request.user
@@ -83,14 +92,20 @@ def profile(request):
 
 # Deleting user account
 def delete(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "You are not logged in yet.")
+        return redirect("/")
     current_user = request.user
     current_user.delete()
     logout(request)
-    messages.info(request, f"@{current_user} account is deleted")
+    messages.error(request, f"@{current_user} account is deleted")
     return redirect("/")
 
-# Adding a new question
+# Adding a new question or editing an existing question
 def add_question(request, question_id = None):
+    if not request.user.is_authenticated:
+        messages.error(request, "Please Login to add question.")
+        return redirect("/")
     context = {}
     context['option'] = "Edit" if question_id else "Add"
     question = get_object_or_404(models.Question, pk=question_id) if question_id else None
@@ -116,21 +131,12 @@ def add_question(request, question_id = None):
 
 # View full details of the question
 def view_question(request, question_id):
+    if not request.user.is_authenticated:
+        messages.error(request, "Please log in to view questions")
+        return redirect("/")
     context = {}
     question = get_object_or_404(models.Question, pk=question_id)
     solutions = models.Solution.objects.filter(question = question)
     context['question'] = question
     context['solutions'] = solutions    
     return render(request, "questions/display_question.html", context)
-
-# # Edit the question for the given question_id
-# def edit_question(request, question_id):
-#     context = {}
-#     try:
-#         question = models.Question.objects.get(pk=question_id)
-#         solutions = models.Solution.objects.filter(question = question)
-#         context['question'] = question
-#         context['solutions'] = solutions
-#     except models.Question.DoesNotExist:
-#         raise Http404(f"Question {question_id} does not exist.")
-#     return render(request, "questions/edit_question.html", context)
