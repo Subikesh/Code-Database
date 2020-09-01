@@ -10,9 +10,8 @@
             {{question.description}}
         </p>
         <h2>Examples</h2>
-        <p>
-            {{question.examples}}
-        </p>
+        <pre>{{question.examples}}
+        </pre>
         <!-- Cards collapse using bootstrap -->
         <h2>Solutions</h2>
         <div id="accordion">
@@ -22,15 +21,17 @@
                 </div>
                 <div id="solution1" class="solution-section collapse" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim justo vel erat convallis porttitor. Suspendisse non felis venenatis, luctus lorem sed, vestibulum dolor. Fusce lorem nibh, ultrices ornare mattis sed, maximus vel lorem. Quisque ac quam erat. In gravida consectetur mauris ac bibendum. Curabitur hendrerit nisl a tellus interdum, vitae cursus enim ornare. Aliquam sed nisl ut sem efficitur consequat mollis in ligula. Proin malesuada arcu non tempus malesuada.</p>
+<p>Donec mauris odio, gravida a laoreet id, rhoncus efficitur arcu. Mauris sem urna, porta sit amet diam et, viverra aliquam est. Pellentesque quis laoreet risus. Integer sit amet mi semper, vehicula ipsum vel, lacinia urna. Aenean commodo augue egestas arcu tristique, ac blandit erat dictum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Cras auctor nisi non nisi congue varius. Sed nec commodo odio. Aenean ac ante id tellus imperdiet tristique sed feugiat augue. Vestibulum convallis, arcu efficitur auctor lobortis, ligula tortor tincidunt elit, in vestibulum dui urna eu nulla. Nam nec pellentesque erat. Proin dictum nisi eu luctus suscipit. Sed tristique, turpis molestie euismod sollicitudin, mauris arcu posuere felis, ut efficitur mauris massa quis sapien. Etiam maximus sapien eget quam tristique, eu imperdiet nibh congue. Praesent laoreet at ligula vitae imperdiet.</p>
                         <div class="row">
-                            <select name="theme" class="custom-select col-sm-3 ml-2 mr-2 mb-3" id="theme-select">
+                            <select name="theme" class="theme-select custom-select col-sm-3 ml-2 mr-2 mb-3">
                                 <option value="chrome">Chrome</option>
                                 <option value="solarized_light">Solarized Light</option>
                                 <option value="monokai" selected>Monokai</option>
                                 <option value="tomorrow_night_eighties">Tomorrow Night</option>
                                 <option value="solarized_dark">Solarized Dark</option>
                             </select>
-                            <select name="language" id="lang-select" class="form-control col-sm-3 ml-auto mr-2 mb-3">
+                            <select name="language" class="lang-select form-control col-sm-3 ml-auto mr-2 mb-3">
                                 <option value="python">python</option>
                                 <option value="c_cpp">C/C++</option>
                                 <option value="javascript" selected>JavaScript</option>
@@ -38,12 +39,12 @@
                                 <option value="csharp">C#</option>
                             </select>
                             <span class="input-group col-sm-2 mr-2 mb-3">
-                                <input type="text" id="size-select" class="form-control" placeholder="font-size: 18">
+                                <input type="text" class="size-select form-control" placeholder="font-size: 18">
                                 <div class="input-group-append"><a class="input-group-text fa fa-arrow-right"></a> </div>
                             </span>
                         </div>
                         <div class="parent col-xs-12">
-                            <div id="editor">function foo(items) {
+                            <div class="editor">function foo(items) {
                                 var x = "All this is syntax highlighted";
                                 return x;
                             }</div>
@@ -51,8 +52,47 @@
                         <button class="btn btn-primary">Save code</button>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div>  <!-- Solution card -->
+            <div class="card mt-4">
+                <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#solution2" aria-expanded="false" aria-controls="collapseOne">
+                    <h5 class="mb-0">Solution 2</h5>
+                </div>
+                <div id="solution2" class="solution-section collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim justo vel erat convallis porttitor. Suspendisse non felis venenatis, luctus lorem sed, vestibulum dolor. Fusce lorem nibh, ultrices ornare mattis sed, maximus vel lorem. Quisque ac quam erat. In gravida consectetur mauris ac bibendum. Curabitur hendrerit nisl a tellus interdum, vitae cursus enim ornare. Aliquam sed nisl ut sem efficitur consequat mollis in ligula. Proin malesuada arcu non tempus malesuada.</p>
+<p>Donec mauris odio, gravida a laoreet id, rhoncus efficitur arcu. Mauris sem urna, porta sit amet diam et, viverra aliquam est. Pellentesque quis laoreet risus. Integer sit amet mi semper, vehicula ipsum vel, lacinia urna. Aenean commodo augue egestas arcu tristique, ac blandit erat dictum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Cras auctor nisi non nisi congue varius. Sed nec commodo odio. Aenean ac ante id tellus imperdiet tristique sed feugiat augue. Vestibulum convallis, arcu efficitur auctor lobortis, ligula tortor tincidunt elit, in vestibulum dui urna eu nulla. Nam nec pellentesque erat. Proin dictum nisi eu luctus suscipit. Sed tristique, turpis molestie euismod sollicitudin, mauris arcu posuere felis, ut efficitur mauris massa quis sapien. Etiam maximus sapien eget quam tristique, eu imperdiet nibh congue. Praesent laoreet at ligula vitae imperdiet.</p>
+                        <div class="row">
+                            <select name="theme" class="theme-select custom-select col-sm-3 ml-2 mr-2 mb-3">
+                                <option value="chrome">Chrome</option>
+                                <option value="solarized_light">Solarized Light</option>
+                                <option value="monokai" selected>Monokai</option>
+                                <option value="tomorrow_night_eighties">Tomorrow Night</option>
+                                <option value="solarized_dark">Solarized Dark</option>
+                            </select>
+                            <select name="language" class="lang-select form-control col-sm-3 ml-auto mr-2 mb-3">
+                                <option value="python">python</option>
+                                <option value="c_cpp">C/C++</option>
+                                <option value="javascript" selected>JavaScript</option>
+                                <option value="java">Java</option>
+                                <option value="csharp">C#</option>
+                            </select>
+                            <span class="input-group col-sm-2 mr-2 mb-3">
+                                <input type="text" class="size-select form-control" placeholder="font-size: 18">
+                                <div class="input-group-append"><a class="input-group-text fa fa-arrow-right"></a> </div>
+                            </span>
+                        </div>
+                        <div class="parent col-xs-12">
+                            <div class="editor">function foo(items) {
+                                var x = "All this is syntax highlighted";
+                                return x;
+                            }</div>
+                        </div>
+                        <button class="btn btn-primary">Save code</button>
+                    </div>
+                </div>
+            </div>  <!-- Solution card -->
+
+        </div>  <!-- Accordian -->
         {% for solution in solutions %}
             <hr>
             <div class="solution-section">

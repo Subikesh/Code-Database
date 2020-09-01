@@ -79,7 +79,7 @@ a:hover {
     position: relative;
     display: inline-block;
 }
-.parent #editor {
+.parent .editor {
     position: absolute;
     top: 0;
     right: 0;

@@ -1,13 +1,13 @@
 // Getting the basic editor set
-var editor = ace.edit("editor");
+let editors = document.getElementsByClassName("editor");
 
 // Elements for changing theme, language and font-size
-var theme = document.getElementById("theme-select");
-var lang = document.getElementById("lang-select");
-var size = document.getElementById("size-select");
+var themes = document.getElementsByClassName("theme-select");
+var langs = document.getElementsByClassName("lang-select");
+var sizes = document.getElementsByClassName("size-select");
 
 let editorLib = {
-    init() {
+    init(editor) {
         // Theme
         editor.setTheme("ace/theme/monokai");
         // Set language
@@ -19,27 +19,60 @@ let editorLib = {
             fontSize: '18px',
         });
     },
-    changeTheme(newTheme) {
+    changeTheme(editor, newTheme) {        
         editor.setTheme("ace/theme/"+newTheme);
     },
-    changeLang(newLang) {
+    changeLang(editor, newLang) {
         editor.session.setMode("ace/mode/"+newLang);
     },
-    changeFontSize(newSize) {
+    changeFontSize(editor, newSize) {
         editor.setFontSize(newSize);
     }
 };
 
-editorLib.init();
-editorLib.changeTheme(theme.value);
-editorLib.changeLang(lang.value);
-
-theme.addEventListener("change", function() {
-    editorLib.changeTheme(this.value);
-});
-lang.addEventListener("change", function() {
-    editorLib.changeLang(this.value);
-});
-size.addEventListener("change", function() {
-    editorLib.changeFontSize(parseInt(this.value));
-});
+// Initial values
+// $(".editor").each(function(index) {
+//     editorLib.init(this);
+// });
+// $(".theme-select").each(function(index) {
+//     editorLib.changeTheme(this.value);
+// });
+// $(".lang-select").each(function(index) {
+//     editorLib.changeLang(this.value);
+// });
+var editorObjects = []
+for (let i = 0; i < editors.length; i++) {
+    let editor = editors[i], theme = themes[i], lang = langs[i];
+    editorObjects.push(ace.edit(editors[i]));
+    editorLib.init(editorObjects[i]);
+    editorLib.changeTheme(editorObjects[i], theme.value);
+    editorLib.changeLang(editorObjects[i], lang.value);
+}
+// Change values on change selection.
+for (let i = 0; i < editorObjects.length; i++) {
+    let editor = editorObjects[i], theme = themes[i], lang = langs[i], fontsize = sizes[i];
+    theme.addEventListener("change", function() {
+        editorLib.changeTheme(editor, theme.value);
+    });
+    lang.addEventListener("change", function() {
+        editorLib.changeLang(editor, lang.value);
+    });
+    fontsize.addEventListener("change", function() {
+        editorLib.changeFontSize(editor, parseInt(fontsize.value));
+    });
+}
+// $(".theme-select").each(function(index) {
+//     this.addEventListener("change", function() {
+//         editorLib.changeTheme(this.value);
+//     });
+// });
+// $(".lang-select").each(function(index) {
+//     this.addEventListener("change", function() {
+//         editorLib.changeLang(this.value);
+//     });
+// });
+// $(".size-select").each(function(index) {
+//     this.addEventListener("change", function() {
+//         editorLib.changeFontSize(parseInt(this.value));
+//     });
+// });
