@@ -3,20 +3,21 @@
 {% block content %}
 
     <div class="container">
-        <h1>Add Question</h1>
+        <h1>{{option}} Question</h1>
         <p>Fill in the details of the question below. Use Ctrl or Shift to select multiple tags for the question.</p>
         <br>
-        <form action="add_question" method="post">
+            <form action="" method="post">
             {% csrf_token %}
             {% for key, value in fields.items %}
-            <div class="form-group row">
-                <div class="col-md-2">
+                <div class="form-group row">
+                    <div class="col-md-2">
                         <label for="id_{{key}}">{{key.capitalize}}</label>
                     </div>
                     <div class="col-md-10">{{value}}</div>
                 </div>
-                {% endfor %} 
+            {% endfor %} 
             <button type="submit" class="btn btn-primary">Submit</button>
+            <input class="btn btn-danger" type="reset" value="Reset">
         </form>
     </div>
 

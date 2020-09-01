@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, Http404
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
@@ -89,29 +89,48 @@ def delete(request):
     messages.info(request, f"@{current_user} account is deleted")
     return redirect("/")
 
-def add_question(request):
+# Adding a new question
+def add_question(request, question_id = None):
+    context = {}
+    context['option'] = "Edit" if question_id else "Add"
+    question = get_object_or_404(models.Question, pk=question_id) if question_id else None
     if request.method == "POST":
-        form = QuestionForm(request.POST, user=request.user)
+        form = QuestionForm(request.POST, user=request.user, instance=question)
         if form.is_valid():
-            instance = form.save(commit=False)
-            instance.user = request.user
-            instance.save()
+            if not question_id:
+                instance = form.save(commit=False)
+                instance.user = request.user
+                instance.save()
+            else:
+                form.save()
             messages.success(request, f"Question {request.POST.get('title')} is saved")
         else:
             for error in form.errors.values():
                 messages.error(request, error.as_text()[2:])
     else:
-        form = QuestionForm()
+        form = QuestionForm(instance=question)
     fields = dict(zip(form.fields.keys(), form))
-    return render(request, "question.html", {"fields": fields, "form":form})
+    context["fields"] = fields
+    context["form"] = form
+    return render(request, "questions/question.html", context)
 
+# View full details of the question
 def view_question(request, question_id):
     context = {}
-    try:
-        question = models.Question.objects.get(pk=question_id)
-        solutions = models.Solution.objects.filter(question = question)
-        context['question'] = question
-        context['solutions'] = solutions
-    except models.Question.DoesNotExist:
-        raise Http404(f"Question {question_id} does not exist.")
-    return render(request, "display_question.html", context)
+    question = get_object_or_404(models.Question, pk=question_id)
+    solutions = models.Solution.objects.filter(question = question)
+    context['question'] = question
+    context['solutions'] = solutions    
+    return render(request, "questions/display_question.html", context)
+
+# # Edit the question for the given question_id
+# def edit_question(request, question_id):
+#     context = {}
+#     try:
+#         question = models.Question.objects.get(pk=question_id)
+#         solutions = models.Solution.objects.filter(question = question)
+#         context['question'] = question
+#         context['solutions'] = solutions
+#     except models.Question.DoesNotExist:
+#         raise Http404(f"Question {question_id} does not exist.")
+#     return render(request, "questions/edit_question.html", context)

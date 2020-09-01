@@ -22,6 +22,7 @@ class QuestionForm(forms.ModelForm):
         
     def clean_title(self):
         title = self.cleaned_data.get("title")
-        if Question.objects.filter(title=title).filter(user=self.user).exists():
-            raise forms.ValidationError("The question '%s' already exists" %(title))
+        if self.instance.pk == None:
+            if Question.objects.filter(title=title).filter(user=self.user).exists():
+                raise forms.ValidationError("The question '%s' already exists" %(title))
         return title
