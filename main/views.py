@@ -137,6 +137,24 @@ def view_question(request, question_id):
     context = {}
     question = get_object_or_404(models.Question, pk=question_id)
     solutions = models.Solution.objects.filter(question = question)
+    if request.method == "POST":
+        title           = request.POST.get('soln-title')
+        if not title:
+            title = "Solution " + str(len(solutions)+1)
+        description     = request.POST.get('soln-desc')
+        language        = request.POST.get('language')
+        code            = request.POST.get('code')
+        link            = request.POST.get('link')
+        new_solution = models.Solution(
+            question    = question,
+            title       = title, 
+            language    = language,
+            program     = code,
+            notes       = description,
+            link        = link
+        )
+        new_solution.save()
+        solutions |= models.Solution.objects.filter(pk=new_solution.pk)
     context['question'] = question
     context['solutions'] = solutions    
     return render(request, "questions/display_question.html", context)

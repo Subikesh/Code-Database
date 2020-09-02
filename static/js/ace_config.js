@@ -5,6 +5,7 @@ let editors = document.getElementsByClassName("editor");
 var themes = document.getElementsByClassName("theme-select");
 var langs = document.getElementsByClassName("lang-select");
 var sizes = document.getElementsByClassName("size-select");
+var codeInputs = document.getElementsByClassName("ace_control");
 
 let editorLib = {
     init(editor) {
@@ -31,23 +32,15 @@ let editorLib = {
 };
 
 // Initial values
-// $(".editor").each(function(index) {
-//     editorLib.init(this);
-// });
-// $(".theme-select").each(function(index) {
-//     editorLib.changeTheme(this.value);
-// });
-// $(".lang-select").each(function(index) {
-//     editorLib.changeLang(this.value);
-// });
 var editorObjects = []
 for (let i = 0; i < editors.length; i++) {
-    let editor = editors[i], theme = themes[i], lang = langs[i];
+    let theme = themes[i], lang = langs[i];
     editorObjects.push(ace.edit(editors[i]));
     editorLib.init(editorObjects[i]);
     editorLib.changeTheme(editorObjects[i], theme.value);
     editorLib.changeLang(editorObjects[i], lang.value);
 }
+
 // Change values on change selection.
 for (let i = 0; i < editorObjects.length; i++) {
     let editor = editorObjects[i], theme = themes[i], lang = langs[i], fontsize = sizes[i];
@@ -61,18 +54,11 @@ for (let i = 0; i < editorObjects.length; i++) {
         editorLib.changeFontSize(editor, parseInt(fontsize.value));
     });
 }
-// $(".theme-select").each(function(index) {
-//     this.addEventListener("change", function() {
-//         editorLib.changeTheme(this.value);
-//     });
-// });
-// $(".lang-select").each(function(index) {
-//     this.addEventListener("change", function() {
-//         editorLib.changeLang(this.value);
-//     });
-// });
-// $(".size-select").each(function(index) {
-//     this.addEventListener("change", function() {
-//         editorLib.changeFontSize(parseInt(this.value));
-//     });
-// });
+
+// Making the submission on submit
+for (let i = 0; i < editorObjects.length; i++) {
+    var editor = editorObjects[i], codeInput = codeInputs[i];
+    editor.addEventListener("change", function() {
+        codeInput.value = editor.session.getValue();
+    });
+}
