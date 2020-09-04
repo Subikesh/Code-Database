@@ -57,7 +57,7 @@ for (let i = 0; i < editorObjects.length; i++) {
 
 // Making the submission on submit
 for (let i = 0; i < editorObjects.length; i++) {
-    var editor = editorObjects[i], codeInput = codeInputs[i];
+    let editor = editorObjects[i], codeInput = codeInputs[i];
     editor.addEventListener("change", function() {
         codeInput.value = editor.session.getValue();
     });

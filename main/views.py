@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django import forms
 from .forms import QuestionForm
-from . import models
+from .models import Question, Solution
 import urllib
 
 # Display the main content and user login page
@@ -12,7 +12,7 @@ def homepage(request):
     context = {'home_page': 'active'}
     if request.user.is_authenticated:
         # Home page after logged in
-        context['questions'] = models.Question.objects.filter(user=request.user)
+        context['questions'] = Question.objects.filter(user=request.user)
     else:
         # Home page to let user login
         if request.method == 'POST':
@@ -108,7 +108,7 @@ def add_question(request, question_id = None):
         return redirect("/")
     context = {}
     context['option'] = "Edit" if question_id else "Add"
-    question = get_object_or_404(models.Question, pk=question_id) if question_id else None
+    question = get_object_or_404(Question, pk=question_id) if question_id else None
     if request.method == "POST":
         form = QuestionForm(request.POST, user=request.user, instance=question)
         if form.is_valid():
@@ -130,13 +130,13 @@ def add_question(request, question_id = None):
     return render(request, "questions/question.html", context)
 
 # View full details of the question
-def view_question(request, question_id):
+def view_question(request, question_id, solution_id=None):
     if not request.user.is_authenticated:
         messages.error(request, "Please log in to view questions")
         return redirect("/")
     context = {}
-    question = get_object_or_404(models.Question, pk=question_id)
-    solutions = models.Solution.objects.filter(question = question)
+    question = get_object_or_404(Question, pk=question_id)
+    solutions = Solution.objects.filter(question = question)
     if request.method == "POST":
         title           = request.POST.get('soln-title')
         if not title:
@@ -145,16 +145,26 @@ def view_question(request, question_id):
         language        = request.POST.get('language')
         code            = request.POST.get('code')
         link            = request.POST.get('link')
-        new_solution = models.Solution(
-            question    = question,
-            title       = title, 
-            language    = language,
-            program     = code,
-            notes       = description,
-            link        = link
-        )
+        print(title,"Notes", description)
+        print('Code', code, language)
+        if solution_id:
+            new_solution = get_object_or_404(Solution, pk=solution_id)
+            new_solution.title = title
+            new_solution.language = language
+            new_solution.program = code
+            new_solution.notes = description
+            new_solution.link = link
+        else:
+            new_solution = Solution(
+                question    = question,
+                title       = title, 
+                language    = language,
+                program     = code,
+                notes       = description,
+                link        = link
+            )
         new_solution.save()
-        solutions |= models.Solution.objects.filter(pk=new_solution.pk)
+        solutions |= Solution.objects.filter(pk=new_solution.pk)
     context['question'] = question
     context['solutions'] = solutions    
     return render(request, "questions/display_question.html", context)

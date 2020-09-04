@@ -31,34 +31,53 @@
                     </div>
                     <div id="solution{{forloop.counter}}" class="solution-section collapse" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
-                            {% if solution.link %}
-                                <a href="{{solution.link}}" class="btn btn-primary float-right">Goto Solution Link</a>
-                            {% endif %}
-                            <p>{{solution.notes}}</p>
-                            <div class="row">
-                                <select name="theme" class="theme-select custom-select col-sm-3 ml-2 mr-2 mb-3">
-                                    <option value="chrome">Chrome</option>
-                                    <option value="solarized_light">Solarized Light</option>
-                                    <option value="monokai" selected>Monokai</option>
-                                    <option value="tomorrow_night_eighties">Tomorrow Night</option>
-                                    <option value="solarized_dark">Solarized Dark</option>
-                                </select>
-                                <select name="language" class="lang-select form-control col-sm-3 ml-auto mr-2 mb-3" value="{{solution.language}}">
-                                    <option value="python">python</option>
-                                    <option value="c_cpp">C/C++</option>
-                                    <option value="javascript" selected>JavaScript</option>
-                                    <option value="java">Java</option>
-                                    <option value="csharp">C#</option>
-                                </select>
-                                <span class="input-group col-sm-2 mr-2 mb-3">
-                                    <input type="text" class="size-select form-control" placeholder="font-size: 18">
-                                    <div class="input-group-append"><a class="input-group-text fa fa-arrow-right"></a> </div>
-                                </span>
-                            </div>
-                            <div class="parent col-xs-12">
-                                <div class="editor">{{solution.program}}</div>
-                            </div>
-                            <button class="btn btn-primary">Save code</button>
+                            <form action="{% url 'main:edit_solution' question.pk solution.pk%}" method="post">
+                                {% csrf_token %}
+                                {% if solution.link %}
+                                    <a href="{{solution.link}}" class="btn btn-primary float-right mr-2">Goto Solution Link</a>
+                                {% endif %}
+                                <div class="form-title form-group d-none">
+                                    <div class="row">
+                                        <label class="col-md-2 col-form-label" for="solution-title">Solution title</label>
+                                        <input name="soln-title" id="solution-title" type="text" class="form-control col-md-10" value="{{solution.title}}">
+                                    </div>
+                                </div>
+                                <div class="form-link form-group d-none">
+                                    <div class="row">
+                                        <label class="col-md-2 col-form-label" for="solution-link">Solution link</label>
+                                        <input name="link" id="solution-link" type="url" class="form-control col-md-10">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <textarea name="soln-desc" readonly disabled class="form-description form-control-plaintext {% if not solution.notes %}d-none{% endif %}" rows="10">{{solution.notes}}</textarea>
+                                </div>
+                                <div class="form-row mt-2">
+                                    <select name="theme" class="theme-select custom-select col-sm-3 ml-2 mr-2 mb-3">
+                                        <option value="chrome">Chrome</option>
+                                        <option value="solarized_light">Solarized Light</option>
+                                        <option value="monokai" selected>Monokai</option>
+                                        <option value="tomorrow_night_eighties">Tomorrow Night</option>
+                                        <option value="solarized_dark">Solarized Dark</option>
+                                    </select>
+                                    <select name="language" class="lang-select form-control col-sm-3 ml-auto mr-2 mb-3" value="{{solution.language}}">
+                                        <option value="python" {% if solution.language is "python" %} selected {% endif %}>python</option>
+                                        <option value="c_cpp"{% if solution.language is "c_cpp" %} selected {% endif %}>C/C++</option>
+                                        <option value="javascript"{% if solution.language is "javascript" %} selected {% endif %}>JavaScript</option>
+                                        <option value="java"{% if solution.language is "java" %} selected {% endif %}>Java</option>
+                                        <option value="csharp"{% if solution.language is "csharp" %} selected {% endif %}>C#</option>
+                                    </select>
+                                    <span class="input-group col-sm-2 mr-2 mb-3">
+                                        <input type="text" class="size-select form-control" placeholder="font-size: 18">
+                                        <div class="input-group-append"><a class="input-group-text fa fa-arrow-right"></a> </div>
+                                    </span>
+                                </div>
+                                <div class="parent col-xs-12">
+                                    <div class="editor">{{solution.program}}</div>
+                                </div>
+                                <input class="ace_control" type="hidden" name="code">
+                                <button class="edit-solution btn btn-primary">Edit solution</button>
+                                <button type="submit" class="submit-solution btn btn-primary d-none">Save Solution</button>
+                            </form>
                         </div>
                     </div> 
                 </div>  <!-- Solution card -->
@@ -72,18 +91,18 @@
                 <div id="addsolution" class="solution-section collapse" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
                         <div class="container-fluid">
-                            <form class="edit-solution" action="" method="post">
+                            <form action="" method="post">
                                 {%  csrf_token %}
                                 <div class="form-group">
                                     <div class="row">
                                         <label class="col-md-2 col-form-label" for="solution-title">Solution title</label>
-                                        <input name="soln-title" id="solution-title" type="text" class="form-control col-md-10" placeholder="Solution n">
+                                        <input name="soln-title" id="solution-title" type="text" class="form-control col-md-10" placeholder="Solution {{solutions|length|add:"1"}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
-                                        <label class="col-md-2 col-form-label" for="solution-notes">Solution link</label>
-                                        <input name="link" id="solution-title" type="url" class="form-control col-md-10">
+                                        <label class="col-md-2 col-form-label" for="solution-link">Solution link</label>
+                                        <input name="link" id="solution-link" type="url" class="form-control col-md-10">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -92,7 +111,7 @@
                                         <textarea name="soln-desc" id="solution-notes" rows="10" cols="40" class="form-control col-md-10"></textarea>
                                     </div>
                                 </div>
-                                <div class="form-row">
+                                <div class="form-row mt-2">
                                     <select name="theme" class="theme-select custom-select col-sm-3 ml-2 mr-2 mb-3">
                                         <option value="chrome">Chrome</option>
                                         <option value="solarized_light">Solarized Light</option>
@@ -103,7 +122,7 @@
                                     <select name="language" class="lang-select form-control col-sm-3 ml-auto mr-2 mb-3">
                                         <option value="python" selected>python</option>
                                         <option value="c_cpp">C/C++</option>
-                                        <option value="javascript" selected>JavaScript</option>
+                                        <option value="javascript">JavaScript</option>
                                         <option value="java">Java</option>
                                         <option value="csharp">C#</option>
                                     </select>
@@ -113,6 +132,7 @@
                                     </span>
                                 </div>
                                 <div class="parent col-xs-12">
+                                    <p class="form-text text-muted">The changes you make to the editor below will not be applied until you edit ans save the solution</p>
                                     <div class="editor"></div>
                                 </div>
                                 <input class="ace_control" type="hidden" name="code">
