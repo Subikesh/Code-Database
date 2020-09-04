@@ -55,10 +55,11 @@ for (let i = 0; i < editorObjects.length; i++) {
     });
 }
 
+const copyCode = (editor, codeInput) => codeInput.value = editor.session.getValue();
+
 // Making the submission on submit
 for (let i = 0; i < editorObjects.length; i++) {
     let editor = editorObjects[i], codeInput = codeInputs[i];
-    editor.addEventListener("change", function() {
-        codeInput.value = editor.session.getValue();
-    });
+    editor.addEventListener("load", () => copyCode(editor, codeInput));
+    editor.addEventListener("change", () => copyCode(editor, codeInput));
 }

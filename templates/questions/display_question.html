@@ -60,11 +60,11 @@
                                         <option value="solarized_dark">Solarized Dark</option>
                                     </select>
                                     <select name="language" class="lang-select form-control col-sm-3 ml-auto mr-2 mb-3" value="{{solution.language}}">
-                                        <option value="python" {% if solution.language is "python" %} selected {% endif %}>python</option>
-                                        <option value="c_cpp"{% if solution.language is "c_cpp" %} selected {% endif %}>C/C++</option>
-                                        <option value="javascript"{% if solution.language is "javascript" %} selected {% endif %}>JavaScript</option>
-                                        <option value="java"{% if solution.language is "java" %} selected {% endif %}>Java</option>
-                                        <option value="csharp"{% if solution.language is "csharp" %} selected {% endif %}>C#</option>
+                                        <option value="python" {% ifequal solution.language 'python' %} selected {% endifequal %}>python</option>
+                                        <option value="c_cpp"{% ifequal solution.language 'c_cpp' %} selected {% endifequal %}>C/C++</option>
+                                        <option value="javascript"{% ifequal solution.language 'javascript' %} selected {% endifequal %}>JavaScript</option>
+                                        <option value="java"{% ifequal solution.language 'java' %} selected {% endifequal %}>Java</option>
+                                        <option value="csharp"{% ifequal solution.language 'csharp' %} selected {% endifequal %}>C#</option>
                                     </select>
                                     <span class="input-group col-sm-2 mr-2 mb-3">
                                         <input type="text" class="size-select form-control" placeholder="font-size: 18">
@@ -77,6 +77,7 @@
                                 <input class="ace_control" type="hidden" name="code">
                                 <button class="edit-solution btn btn-primary">Edit solution</button>
                                 <button type="submit" class="submit-solution btn btn-primary d-none">Save Solution</button>
+                                <input type="reset" class="cancel-edit btn btn-danger d-none">
                             </form>
                         </div>
                     </div> 
@@ -137,6 +138,7 @@
                                 </div>
                                 <input class="ace_control" type="hidden" name="code">
                                 <button type="submit" class="submit-solution btn btn-primary">Save solution</button>
+                                <input type="reset" class="btn btn-danger">
                             </form>
                         </div>
                     </div>
