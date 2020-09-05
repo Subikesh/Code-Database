@@ -5,14 +5,13 @@ from django.contrib import messages
 from django import forms
 from .forms import QuestionForm
 from .models import Question, Solution
-import urllib
 
-# Display the main content and user login page
+# Display the questions specific to user or the user login page
 def homepage(request):
     context = {'home_page': 'active'}
     if request.user.is_authenticated:
         # Home page after logged in
-        context['questions'] = Question.objects.filter(user=request.user)
+        context['questions'] = Question.objects.filter(user=request.user).order_by('-date_added')[:20]
     else:
         # Home page to let user login
         if request.method == 'POST':
@@ -136,7 +135,7 @@ def view_question(request, question_id, solution_id=None):
         return redirect("/")
     context = {}
     question = get_object_or_404(Question, pk=question_id)
-    solutions = Solution.objects.filter(question = question)
+    solutions = Solution.objects.filter(question = question).order_by('-date_added')
     if request.method == "POST":
         title           = request.POST.get('soln-title')
         if not title:
