@@ -21,7 +21,7 @@
                                     {% else %}
                                         <p class="card-text description">{{question.description}}</p>
                                     {% endif %}
-                                    <a class="icon" href="{% if question.link %}{{question.link}}{% else %}questions/{{question.pk}}{% endif %}"><i class="fa fa-arrow-circle-right fa-lg"></i></a>
+                                    <a class="icon" {% if question.link %} href="{{question.link}}" target="_blank" {% else %} href="questions/{{question.pk}}"     {% endif %}"><i class="fa fa-arrow-circle-right fa-lg"></i></a>
                                 </div>
                             </div>  
                         </div>

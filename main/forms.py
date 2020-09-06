@@ -1,5 +1,6 @@
 from django import forms
 from .models import Question, Solution
+from django.utils.translation import gettext_lazy
 
 class QuestionForm(forms.ModelForm):
 
@@ -18,6 +19,10 @@ class QuestionForm(forms.ModelForm):
             "difficulty": forms.Select(attrs={"class": "form-control"}),
             "tag": forms.SelectMultiple(attrs={"class": "form-control"}),
             "examples": forms.Textarea(attrs={"class": "form-control"})
+        }
+
+        help_texts = {
+            'tag': gettext_lazy('Use Ctrl or Shift to select multiple tags for the question.'),
         }
         
     def clean_title(self):

@@ -4,17 +4,20 @@
 
     <div class="container">
         <h1>{{option}} Question</h1>
-        <p>Fill in the details of the question below. Use Ctrl or Shift to select multiple tags for the question.</p>
+        <p>Fill in the details of the question below.</p>
         <br>
             <form action="" method="post">
             {% csrf_token %}
-            {% for key, value in fields.items %}
-                <div class="form-group row">
-                    <div class="col-md-2">
-                        <label for="id_{{key}}">{{key.capitalize}}</label>
-                    </div>
-                    <div class="col-md-10">{{value}}</div>
+            <div class="text-danger">{{ form.non_field_errors|striptags }}</div>
+            {% for field in form %}
+            <div class="form-group row">
+                <div class="col-md-2">
+                    {{field.label_tag}}
                 </div>
+                <div class="col-md-10">{{field}}
+                    <div class="form-text text-muted">{{field.help_text|safe}}</div>
+                </div>
+            </div>
             {% endfor %} 
             <button type="submit" class="btn btn-primary">Submit</button>
             <input class="btn btn-danger" type="reset" value="Reset">

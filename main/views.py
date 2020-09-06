@@ -123,8 +123,6 @@ def add_question(request, question_id = None):
                 messages.error(request, error.as_text()[2:])
     else:
         form = QuestionForm(instance=question)
-    fields = dict(zip(form.fields.keys(), form))
-    context["fields"] = fields
     context["form"] = form
     return render(request, "questions/question.html", context)
 
