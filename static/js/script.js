@@ -50,6 +50,16 @@ for (let i = 0; i < edits.length; i++) {
     // });
 }
 
+// Sort the options in select tags
+var sortOptions = function(options) {
+    Array.prototype.sort.call(options, function(a, b) {
+        if (a.text <= b.text)   return -1
+        else                    return 1
+    });
+};
+var optionList = document.getElementById("id_tag").options;
+sortOptions(optionList);
+
 // Adding new tags for questions
 var tagInput = document.getElementById("tag-name");
 
@@ -64,16 +74,18 @@ var addNewTag = function() {
         success: function(result) {
             tagInput.value = '';
             if (!result.present) {
-                console.log(result.text, result.value);
                 // Use the returned object to append to the select list
                 let addedOption = new Option(result.text, result.value);
-                $("#id_tag").append(addedOption);
+                optionList.add(addedOption);
+                sortOptions(optionList);
             }
             else 
                 $("#tag-insert-error").html(result.errorMessage);
         }
     });
+
 };
+
 
 // If Add button is clicked
 $("#add-tag").on("click", addNewTag);
@@ -81,5 +93,5 @@ $("#add-tag").on("click", addNewTag);
 // If Enter is pressed inside the #tag-name input area
 $("#tag-name").on("keypress", function(event) {
     if (event.key === "Enter" || event.keyCode === 13) 
-        addNewTag();
+    addNewTag();
 });
