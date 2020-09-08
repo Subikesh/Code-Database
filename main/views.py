@@ -127,6 +127,15 @@ def add_question(request, question_id = None):
     context["form"] = form
     return render(request, "questions/question.html", context)
 
+# Delete question
+def delete_question(request, question_id):
+    if not request.user.is_authenticated:
+        messages.error(request, "Please Login to add question.")
+        return redirect("/")
+    question = get_object_or_404(Question, pk=question_id)
+    question.delete()
+    return redirect('/')
+
 # Add a new tag
 def add_tag(request):
     tag_name = request.GET.get('tag_name')

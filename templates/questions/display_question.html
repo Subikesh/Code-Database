@@ -3,12 +3,13 @@
 {% block content %}
     <div class="container">
         <a href="{% url 'main:edit_question' question.id %}" class="btn btn-info float-right">Edit <i class="fas fa-edit"></i></a>
+        <a href="{% url 'main:delete_question' question.id %}" class="btn btn-danger float-right mr-2">Delete <i class="fas fa-trash-alt"></i></a>
+        {% if question.link %}
         <a href="{{question.link}}" class="btn btn-primary float-right mr-2" target="_blank">Goto Link</a>
+        {% endif %}
         <h1>{{question.title}}</h1>
         <strong class="bg-{{question.difficulty|lower}}">{{question.difficulty}}</strong>
         <hr>
-        {% if question.link %}
-        {% endif %}
         <p>
             {{ question.description }}
         </p>
