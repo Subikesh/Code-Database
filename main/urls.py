@@ -9,10 +9,13 @@ urlpatterns = [
     path('logout', views.logout, name="logout"),
     path('profile', views.profile, name="profile"),
     path('delete', views.delete, name="delete"),
+
+    path('add_tag', views.add_tag, name="add_question_tag"),
     path('add_question', views.add_question, name="add_question"),
     path('add_question/<int:question_id>', views.add_question, name="edit_question"),
-    path('add_tag', views.add_tag, name="add_question_tag"),
-    path('delete/<int:question_id>/', views.delete_question, name="delete_question"),
+    path('delete_question/<int:question_id>/', views.delete_question, name="delete_question"),
+
     path('questions/<int:question_id>/', views.view_question, name="view_question"),
     path('questions/<int:question_id>/<int:solution_id>/', views.view_question, name="edit_solution"),
+    path('delete_solution/<int:question_id>/<int:solution_id>', views.delete_solution, name="delete_solution")
 ]

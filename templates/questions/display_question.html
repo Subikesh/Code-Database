@@ -78,7 +78,8 @@
                                 <input class="ace_control" type="hidden" name="code">
                                 <button class="edit-solution btn btn-primary">Edit solution</button>
                                 <button type="submit" class="submit-solution btn btn-primary d-none">Save Solution</button>
-                                <input type="reset" class="cancel-edit btn btn-danger d-none">
+                                <a href="{% url 'main:delete_solution' question.pk solution.pk %}" class="btn btn-danger">Delete solution</a>
+                                <!-- <input type="reset" class="cancel-edit btn btn-danger d-none"> -->
                             </form>
                         </div>
                     </div> 

@@ -130,7 +130,7 @@ def add_question(request, question_id = None):
 # Delete question
 def delete_question(request, question_id):
     if not request.user.is_authenticated:
-        messages.error(request, "Please Login to add question.")
+        messages.error(request, "Please Login to delete question.")
         return redirect("/")
     question = get_object_or_404(Question, pk=question_id)
     question.delete()
@@ -152,7 +152,7 @@ def add_tag(request):
         data["text"] = tag_name
     return JsonResponse(data)
 
-# View full details of the question
+# View full details of the question and add and edit solution for that question.
 def view_question(request, question_id, solution_id=None):
     if not request.user.is_authenticated:
         messages.error(request, "Please log in to view questions")
@@ -171,6 +171,7 @@ def view_question(request, question_id, solution_id=None):
         print(title,"Notes", description)
         print('Code', code, language)
         if solution_id:
+            # Edit solution
             new_solution = get_object_or_404(Solution, pk=solution_id)
             new_solution.title = title
             new_solution.language = language
@@ -178,6 +179,7 @@ def view_question(request, question_id, solution_id=None):
             new_solution.notes = description
             new_solution.link = link
         else:
+            # Add solution
             new_solution = Solution(
                 question    = question,
                 title       = title, 
@@ -191,3 +193,12 @@ def view_question(request, question_id, solution_id=None):
     context['question'] = question
     context['solutions'] = solutions    
     return render(request, "questions/display_question.html", context)
+
+# Delete solution
+def delete_solution(request, question_id, solution_id):
+    if not request.user.is_authenticated:
+        messages.error(request, "Please Login to delete solution.")
+        return redirect("/")
+    solution = get_object_or_404(Solution, pk=solution_id)
+    solution.delete()
+    return view_question(request, question_id)
