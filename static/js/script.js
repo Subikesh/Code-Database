@@ -49,3 +49,37 @@ for (let i = 0; i < edits.length; i++) {
     //     event.preventDefault();
     // });
 }
+
+// Adding new tags for questions
+var tagInput = document.getElementById("tag-name");
+
+var addNewTag = function() {
+    let data = tagInput.value;
+    $.ajax({
+        url: "/add_tag",
+        data: {
+            'tag_name': data,
+        },
+        datatype: 'json',
+        success: function(result) {
+            tagInput.value = '';
+            if (!result.present) {
+                console.log(result.text, result.value);
+                // Use the returned object to append to the select list
+                let addedOption = new Option(result.text, result.value);
+                $("#id_tag").append(addedOption);
+            }
+            else 
+                $("#tag-insert-error").html(result.errorMessage);
+        }
+    });
+};
+
+// If Add button is clicked
+$("#add-tag").on("click", addNewTag);
+
+// If Enter is pressed inside the #tag-name input area
+$("#tag-name").on("keypress", function(event) {
+    if (event.key === "Enter" || event.keyCode === 13) 
+        addNewTag();
+});

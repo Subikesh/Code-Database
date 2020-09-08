@@ -22,7 +22,7 @@ class QuestionForm(forms.ModelForm):
         }
 
         help_texts = {
-            'tag': gettext_lazy('Use Ctrl or Shift to select multiple tags for the question.'),
+            'tag': gettext_lazy('Use Ctrl or Shift to select multiple tags for the question. Add new tag below if your tag is not found in the list.'),
         }
         
     def clean_title(self):

@@ -1,10 +1,10 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django import forms
 from .forms import QuestionForm
-from .models import Question, Solution
+from .models import Question, Solution, Tag
 
 # Display the questions specific to user or the user login page
 def homepage(request):
@@ -115,6 +115,7 @@ def add_question(request, question_id = None):
                 instance = form.save(commit=False)
                 instance.user = request.user
                 instance.save()
+                form.save_m2m()
             else:
                 form.save()
             messages.success(request, f"Question {request.POST.get('title')} is saved")
@@ -125,6 +126,22 @@ def add_question(request, question_id = None):
         form = QuestionForm(instance=question)
     context["form"] = form
     return render(request, "questions/question.html", context)
+
+# Add a new tag
+def add_tag(request):
+    tag_name = request.GET.get('tag_name')
+    tag_name = tag_name.capitalize()
+    data = {}
+    if tag_name == '' or Tag.objects.filter(name = tag_name).exists():
+        data["present"] = True
+        data["errorMessage"] = f"{tag_name} is already present in tag list.";
+    else:
+        data["present"] = False
+        tag = Tag(name = tag_name)
+        tag.save()
+        data["value"] = Tag.objects.get(name = tag_name).pk
+        data["text"] = tag_name
+    return JsonResponse(data)
 
 # View full details of the question
 def view_question(request, question_id, solution_id=None):

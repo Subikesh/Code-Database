@@ -10,14 +10,25 @@
             {% csrf_token %}
             <div class="text-danger">{{ form.non_field_errors|striptags }}</div>
             {% for field in form %}
-            <div class="form-group row">
-                <div class="col-md-2">
-                    {{field.label_tag}}
-                </div>
-                <div class="col-md-10">{{field}}
-                    <div class="form-text text-muted">{{field.help_text|safe}}</div>
-                </div>
-            </div>
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        {{field.label_tag}}
+                    </div>
+                    <div class="col-md-10">
+                        {{field}}
+                        <div class="form-text text-muted">{{field.help_text|safe}}</div>
+                    </div>
+                </div>        
+                {% if field.label == "Tag" %}
+                    <div class="add-tag-section form-group row">
+                        <div class="col-md-2"></div>
+                        <div class="col-5">
+                            <input type="text" id="tag-name" class="form-control" placeholder="New tag name">
+                        </div>
+                        <a id="add-tag" class="btn btn-success"><i class="fa fa-plus"></i></a>
+                        <div id="tag-insert-error" class="ml-2 mt-1 text-danger"></div>
+                    </div>
+                {% endif %}
             {% endfor %} 
             <button type="submit" class="btn btn-primary">Submit</button>
             <input class="btn btn-danger" type="reset" value="Reset">
