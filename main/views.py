@@ -201,4 +201,4 @@ def delete_solution(request, question_id, solution_id):
         return redirect("/")
     solution = get_object_or_404(Solution, pk=solution_id)
     solution.delete()
-    return view_question(request, question_id)
+    return redirect(f"/questions/{question_id}")
