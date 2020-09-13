@@ -13,7 +13,7 @@ def homepage(request):
         # Home page after logged in
         context['questions'] = Question.objects.filter(user=request.user).order_by('-date_added')[:20]
     else:
-        # Home page to let user login
+        # Home page for user login 
         if request.method == 'POST':
             user_name       = request.POST.get('username')
             password        = request.POST.get('password')

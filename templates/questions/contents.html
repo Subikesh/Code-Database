@@ -1,8 +1,29 @@
 <div class="container">
-    <!-- <h1 class="page-header display-4">Code database</h1>
-    <p>You have successfully logged in the page. All the content specific to {{user.first_name}} {{user.last_name}} goes here.</p> -->
     <a class="float-right btn btn-primary" href="add_question">Add new question</a>
-    <h2 class="text-center pb-5">Latest Problems</h3>
+    <h2 class="text-center pb-5">Problems Gallery</h3>
+    <div class="navbar navbar-light bg-light">
+        <form action="filter-question" class="form-inline">
+            <div class="search-bar input-group mr-sm-2">
+                <input type="text" name="search" id="search-text" class="form-control" placeholder="Search problem">
+                <div class="input-append">
+                    <button class="btn btn-secondary" type="submit"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            <select name="difficulty" id="diff-select" class="form-control mr-sm-2">
+                <option value selected>Difficulty</option>
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+            </select>
+            <select name="" id="diff-select" class="form-control mr-sm-2">
+                <option value selected>Tag</option>
+                {% for tag in tags %}
+                <option value="{{tag.name}}">{{tag.name}}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" class="mr-sm-2 btn btn-secondary" value="Filter">
+        </form>
+    </div>
     <div class="card-group problems text-center">
         <div class="row">
             {% for question in questions %}
