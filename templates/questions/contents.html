@@ -1,48 +1,56 @@
 <div class="container">
     <a class="float-right btn btn-primary" href="add_question">Add new question</a>
     <h2 class="text-center pb-5">Problems Gallery</h3>
-    <div class="navbar navbar-light bg-light">
-        <form action="filter-question" class="form-inline">
+    <!-- Navbar for filtering questions -->
+    <div class="navbar navbar-light bg-light d-block">
+        <form action="{% url 'main:homepage' %}" class="form-inline" id='filter-form'>
+            <!-- Search bar -->
             <div class="search-bar input-group mr-sm-2">
                 <input type="text" name="search" id="search-text" class="form-control" placeholder="Search problem">
                 <div class="input-append">
                     <button class="btn btn-secondary" type="submit"><i class="fas fa-search"></i></button>
                 </div>
             </div>
-            <select name="difficulty" id="diff-select" class="form-control mr-sm-2">
+            <!-- Filter by difficulty and tags -->
+            <select name="difficulty" id="diff-select" class="form-control mr-sm-2 ml-auto">
                 <option value selected>Difficulty</option>
                 <option value="Easy">Easy</option>
                 <option value="Medium">Medium</option>
                 <option value="Hard">Hard</option>
             </select>
-            <select name="" id="diff-select" class="form-control mr-sm-2">
+            <select name="tag" id="diff-select" class="form-control mr-sm-2">
                 <option value selected>Tag</option>
                 {% for tag in tags %}
-                <option value="{{tag.name}}">{{tag.name}}</option>
+                <option value="{{tag.pk}}">{{tag.name}}</option>
                 {% endfor %}
             </select>
             <input type="submit" class="mr-sm-2 btn btn-secondary" value="Filter">
+            <a href="{% url 'main:homepage' %}" class="btn btn-danger">Reset</a>
         </form>
     </div>
-    <div class="card-group problems text-center">
-        <div class="row">
-            {% for question in questions %}
-                <div class="col-sm-6 col-md-4 item">
-                    <div class="card mb-3 sh-{{question.difficulty|lower}} text-dark">
-                        <a href="questions/{{question.pk}}">
-                            <h4 class="card-header text-center">{{question.title}}</h3>
-                        </a>
-                        <div class="card-body">
-                            {% if question.description|length > 100 %}
-                                <p class="card-text description">{{ question.description|slice:97 }}...</p>
-                            {% else %}
-                                <p class="card-text description">{{question.description}}</p>
-                            {% endif %}
-                            <a class="icon" {% if question.link %} href="{{question.link}}" target="_blank" {% else %} href="questions/{{question.pk}}"     {% endif %}"><i class="fa fa-arrow-circle-right fa-lg"></i></a>
-                        </div>
-                    </div>  
-                </div>
-            {% endfor %}
+    {% if questions %}
+        <div class="card-group problems text-center">
+            <div class="row">
+                {% for question in questions %}
+                    <div class="col-sm-6 col-md-4 item">
+                        <div class="card mb-3 sh-{{question.difficulty|lower}} text-dark">
+                            <a href="questions/{{question.pk}}">
+                                <h4 class="card-header text-center">{{question.title}}</h3>
+                            </a>
+                            <div class="card-body">
+                                {% if question.description|length > 100 %}
+                                    <p class="card-text description">{{ question.description|slice:97 }}...</p>
+                                {% else %}
+                                    <p class="card-text description">{{question.description}}</p>
+                                {% endif %}
+                                <a class="icon" {% if question.link %} href="{{question.link}}" target="_blank" {% else %} href="questions/{{question.pk}}"     {% endif %}"><i class="fa fa-arrow-circle-right fa-lg"></i></a>
+                            </div>
+                        </div>  
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-    </div>
+    {% else %}
+    Nothing here :(
+    {% endif %}
 </div>

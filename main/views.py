@@ -11,7 +11,18 @@ def homepage(request):
     context = {'home_page': 'active'}
     if request.user.is_authenticated:
         # Home page after logged in
-        context['questions'] = Question.objects.filter(user=request.user).order_by('-date_added')[:20]
+        final_questions = Question.objects.filter(user = request.user).order_by('-date_added')
+        search          = request.GET.get('search')
+        difficulty      = request.GET.get('difficulty')
+        tag             = request.GET.get('tag')
+        if search:
+            final_questions = final_questions.filter(title__icontains = search)
+        if difficulty:
+            final_questions = final_questions.filter(difficulty = difficulty)
+        if tag:
+            final_questions = final_questions.filter(tag__pk = tag)
+        context['questions'] = final_questions[:20]
+        context['tags'] = Tag.objects.all()
     else:
         # Home page for user login 
         if request.method == 'POST':

@@ -1,5 +1,8 @@
-// Password matching validation
+// Show bootstrap toasts
 $('.toast').toast('show');
+
+// User login
+// Password matching validation
 var pwd = document.getElementById("pwd-input"), cnf = document.getElementById("cnf-pwd");
 
 var  validatePassword = function() {
@@ -85,7 +88,6 @@ var addNewTag = function() {
     });
 
 };
-
 
 // If Add button is clicked
 $("#add-tag").on("click", addNewTag);
