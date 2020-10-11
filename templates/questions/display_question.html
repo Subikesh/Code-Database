@@ -14,9 +14,9 @@
             {{ question.description }}
         </p>
         {% if question.tag.all %}
-            <strong> Related Tags: </strong>
+            <i> Related Tags: </i>
             {% for tag_name in question.tag.all %}
-                <a href="#" class="badge badge-dark">{{tag_name.name}}</a>
+                <a href="{% url 'main:homepage' %}?tag={{tag_name.pk}}" class="badge badge-dark">{{tag_name.name}}</a>
             {% endfor %}
         {% endif %}
         <h2>Examples</h2>

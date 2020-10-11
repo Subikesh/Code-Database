@@ -1,7 +1,7 @@
-// Show bootstrap toasts
+// Show bootstrap toasts    ---------------------------------------------------------------------
 $('.toast').toast('show');
 
-// User login
+// User login   ---------------------------------------------------------------------------------
 // Password matching validation
 var pwd = document.getElementById("pwd-input"), cnf = document.getElementById("cnf-pwd");
 
@@ -17,7 +17,7 @@ if (pwd && cnf) {
     cnf.onkeyup = validatePassword;
 }
 
-// Solution submit form
+// Solution submit form    ----------------------------------------------------------------------
 var titles = document.getElementsByClassName("form-title");
 var links = document.getElementsByClassName("form-link");
 var notes = document.getElementsByClassName("form-description");
