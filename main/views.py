@@ -133,6 +133,8 @@ def add_question(request, question_id = None):
         else:
             for error in form.errors.values():
                 messages.error(request, error.as_text()[2:])
+        if question_id:
+            return redirect(f"/questions/{question_id}")
     else:
         form = QuestionForm(instance=question)
     context["form"] = form

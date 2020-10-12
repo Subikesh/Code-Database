@@ -15,8 +15,13 @@ class Question(models.Model):
         ("Medium", "Medium"),
         ("Easy", "Easy"),
     ]
+    access_choices = [
+        ("Private", "Private"),
+        ("Public", "Public")
+    ]
     user            = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="User", on_delete = models.CASCADE)
     title           = models.CharField(max_length = 200)
+    access          = models.CharField(max_length = 10, choices = access_choices, default = "Private")
     description     = models.TextField(null = True, blank = True)
     link            = models.URLField(null = True, blank = True)
     difficulty      = models.TextField(max_length = 10, choices = difficulty_choices)
