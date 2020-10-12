@@ -29,6 +29,7 @@
         </form>
     </div>
     {% if questions %}
+        <h3 class="mb-3">Private Questions</h3>
         <div class="card-group problems text-center">
             <div class="row">
                 {% for question in questions %}
@@ -55,7 +56,33 @@
                 {% endfor %}
             </div>
         </div>
-    {% else %}
-    Nothing here :(
     {% endif %}
+    <hr>
+    <h3 class="mb-3">Public Questions</h3>
+    <div class="card-group problems text-center">
+        <div class="row">
+            {% for question in public_questions %}
+                <div class="col-sm-6 col-md-4 item">
+                    <div class="card mb-3 sh-{{question.difficulty|lower}} text-dark">
+                        <a href="questions/{{question.pk}}">
+                            <h4 class="card-header text-center">{{question.title}}</h3>
+                        </a>
+                        <div class="card-body">
+                            {% if question.description|length > 100 %}
+                                <p class="card-text description">{{ question.description|slice:97 }}...</p>
+                            {% else %}
+                                <p class="card-text description">{{question.description}}</p>
+                            {% endif %}
+                            <div class="question-card-tags mb-3">
+                                {% for tag_name in question.tag.all %}
+                                    <a href="{% url 'main:homepage' %}?tag={{tag_name.pk}}" class="badge badge-secondary">{{tag_name.name}}</a>
+                                {% endfor %}
+                            </div>    
+                            <a class="icon" {% if question.link %} href="{{question.link}}" target="_blank" {% else %} href="questions/{{question.pk}}"     {% endif %}"><i class="fa fa-arrow-circle-right fa-lg"></i></a>
+                        </div>
+                    </div>  
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>

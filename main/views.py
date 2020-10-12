@@ -21,7 +21,8 @@ def homepage(request):
             final_questions = final_questions.filter(difficulty = difficulty)
         if tag:
             final_questions = final_questions.filter(tag__pk = tag)
-        context['questions'] = final_questions[:20]
+        context['questions'] = final_questions.filter(access="Private")[:20]
+        context['public_questions'] = final_questions.filter(access="Public")[:20]
         context['tags'] = Tag.objects.all()
     else:
         # Home page for user login 
