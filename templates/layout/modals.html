@@ -1,0 +1,45 @@
+<!-- Modal definitions for making questions private or public -->
+    
+<!-- Private to public -->
+<div class="modal fade" id="make-public-modal" tabindex="-1" role="dialog" aria-labelledby="make-public-modalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Make this question public</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            <p>This question is currently private and only you can view this question.
+            If you make this question public, we will review this question and will make this question globally available.</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <a type="button" href="{% url 'main:make_public' question.id %}" class="btn btn-primary">Make public</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Public to private -->
+<div class="modal fade" id="make-private-modal" tabindex="-1" role="dialog" aria-labelledby="make-private-modalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Make this question public</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>This question is currently public. Any changes to the question will not reflect the public question.
+                To make changes to the question, you can <b>make a copy</b> of the same to your database.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a type="button" href="{% url 'main:make_private' question.id %}" class="btn btn-primary">Make a copy</a>
+            </div>
+        </div>
+    </div>
+</div>
