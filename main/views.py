@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, Http404, JsonResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
+from django.db.models import Q
 from django import forms
 from .forms import QuestionForm
 from .models import Question, Solution, Tag
@@ -11,7 +12,7 @@ def homepage(request):
     context = {'home_page': 'active'}
     if request.user.is_authenticated:
         # Home page after logged in
-        final_questions = Question.objects.filter(user = request.user).order_by('-date_added')
+        final_questions = Question.objects.filter(Q(user = request.user) | Q(access="Public")).order_by('-date_added')
         search          = request.GET.get('search')
         difficulty      = request.GET.get('difficulty')
         tag             = request.GET.get('tag')
