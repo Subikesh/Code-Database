@@ -149,6 +149,32 @@ def delete_question(request, question_id):
     question.delete()
     return redirect('/')
 
+# Make private question to public
+def make_public(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    print("Send notification to staffs or admin(me) and provide public access")
+    permission = True # Change it
+    if permission:
+        question.access = "Public"
+        question.save()
+    else:
+        print("Send notif to user that it's not changed")
+    return redirect(f'/questions/{question_id}')
+
+# Make public questions to private
+def make_private(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    # Copying the tags of old to new object
+    old_tags = question.tag.all()
+    # Here, a new copy of  public question is taken and saved for that user.
+    question.pk = None
+    question.access = "Private"
+    question.user = request.user
+    question.save()
+    question.tag.set(old_tags)
+    messages.success(request, "A copy of the question is saved to your profile.")
+    return redirect(f'/questions/{question.id}')
+
 # Add a new tag
 def add_tag(request):
     tag_name = request.GET.get('tag_name')
