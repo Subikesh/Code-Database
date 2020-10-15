@@ -91,6 +91,13 @@ def profile(request):
         messages.error(request, "You are not logged in yet.")
         return redirect("/")
     context = {'user_page': "active"}
+    return render(request, "account/profile.html", context)
+
+def edit_profile(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "You are not logged in yet.")
+        return redirect("/")
+    context = {'user_page': "active"}
     if request.method == "POST":
         current_user = request.user
         form = request.POST
@@ -100,7 +107,7 @@ def profile(request):
         if form.get('password') != '':
             current_user.set_password(form.get('password'))
         current_user.save()
-    return render(request, "account/profile.html", context)
+    return render(request, "account/edit_profile.html", context)
 
 # Deleting user account
 def delete(request):

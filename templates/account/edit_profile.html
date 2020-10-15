@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="page-header">Your Profile</h1>
+        <form action="profile" method="post">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="fname-input">First name </label>
+                    <input type="text" class="form-control" id="fname-input" name="first_name" placeholder="Your First name here" value="{{user.first_name}}">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="lname-input">Last name</label>
+                    <input type="text" class="form-control" id="lname-input" name="last_name" placeholder="Your Last name here" value="{{user.last_name}}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email-input">Email address</label>
+                <input type="email" class="form-control" id="email-input" name="email" placeholder="Your email here" value="{{user.email}}" disabled>
+            </div>
+            <div class="form-group">
+                <label for="user-input">Username</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">@</div>
+                    </div>
+                    <input type="text" class="form-control" id="user-input" name="username" placeholder="Unique username here" value="{{user.username}}" pattern="^[a-z0-9_]+$">
+                </div>
+                <small class="form-text text-muted">Username can only contain lower case letters, _ and digits. Example: "user_1", "your_name321"</small>
+            </div>
+            <div class="form-group">
+                <label for="pwd-input">Password </label>
+                <input type="password" class="form-control" id="pwd-input" name="password" placeholder="Password" pattern="^(?=.*[A-Za-z])(?=.*[0-9]).{8,32}$">
+                <small class="form-text text-muted">Password must be 8-20 charectors long and have atleast 1 digit and an alphabet.</small>
+            </div>
+            <div class="form-group">
+                <label for="cnf-pwd">Confirm Password </label>
+                <input type="password" class="form-control" id="cnf-pwd" placeholder="Retype password" pattern="^(?=.*[A-Za-z])(?=.*[0-9]).{8,32}$">
+            </div>
+
+            <button class="btn btn-primary" type="submit">Edit profile</button> 
+            <a class="btn btn-danger" href="delete">Delete account</a>
+        </form>        
+    </div>
+{% endblock %}
