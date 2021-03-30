@@ -24,4 +24,5 @@ urlpatterns = [
 
     # API urls
     path('api/questions/', views.QuestionList.as_view(), name="api_question"),
+    path('api/tag/<str:name>', views.CreateTag.as_view(), name="api_create_tag"),
 ]

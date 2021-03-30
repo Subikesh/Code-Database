@@ -6,8 +6,10 @@ from django.db.models import Q
 from django import forms
 from .forms import QuestionForm
 from .models import Question, Solution, Tag
+
 from rest_framework import generics, permissions
-from .serializers import QuestionSerializer
+from rest_framework.exceptions import ValidationError
+from .serializers import QuestionSerializer, TagSerializer
 
 # Display the questions specific to user or the user login page
 def homepage(request):
@@ -269,3 +271,17 @@ class QuestionList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user = self.request.user) 
+
+# Create a new tag from API call with ../api/tag/<name>
+class CreateTag(generics.CreateAPIView):
+    serializer_class = TagSerializer
+    permission_classes = [permissions.IsAdminUser]
+    
+    # Get tag object corresponding to the tag name from kwargs
+    def get_queryset(self):
+        return Tag.objects.filter(name=self.kwargs['name'])
+
+    def perform_create(self, serializer):
+        if self.get_queryset().exists():
+            raise ValidationError(f"The tag {self.kwargs['name']} already exists")
+        serializer.save(name=self.kwargs['name'])
