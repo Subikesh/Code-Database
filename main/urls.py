@@ -20,5 +20,8 @@ urlpatterns = [
 
     path('questions/<int:question_id>/', views.view_question, name="view_question"),
     path('questions/<int:question_id>/<int:solution_id>/', views.view_question, name="edit_solution"),
-    path('delete_solution/<int:question_id>/<int:solution_id>', views.delete_solution, name="delete_solution")
+    path('delete_solution/<int:question_id>/<int:solution_id>', views.delete_solution, name="delete_solution"),
+
+    # API urls
+    path('api/questions/', views.QuestionList.as_view(), name="api_question"),
 ]

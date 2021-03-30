@@ -1,11 +1,13 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse, Http404, JsonResponse
+from django.http import HttpResponse, Http404, JsonResponse, request
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.db.models import Q
 from django import forms
 from .forms import QuestionForm
 from .models import Question, Solution, Tag
+from rest_framework import generics, permissions
+from .serializers import QuestionSerializer
 
 # Display the questions specific to user or the user login page
 def homepage(request):
@@ -250,3 +252,13 @@ def delete_solution(request, question_id, solution_id):
     solution = get_object_or_404(Solution, pk=solution_id)
     solution.delete()
     return redirect(f"/questions/{question_id}")
+
+
+# REST API views ---------------------------------------------------------------------
+class QuestionList(generics.ListCreateAPIView):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(user = self.request.user) 
