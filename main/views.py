@@ -256,9 +256,16 @@ def delete_solution(request, question_id, solution_id):
 
 # REST API views ---------------------------------------------------------------------
 class QuestionList(generics.ListCreateAPIView):
-    queryset = Question.objects.all()
     serializer_class = QuestionSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        # If user views anonymously, public questions are shown
+        query = Question.objects.filter(access="Public")
+        # User authenticated can see his questions and all public questions
+        if self.request.user.is_authenticated:
+            query = query | Question.objects.filter(user=self.request.user)
+        return query
 
     def perform_create(self, serializer):
         serializer.save(user = self.request.user) 
