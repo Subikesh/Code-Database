@@ -9,7 +9,7 @@ from .models import Question, Solution, Tag
 
 from rest_framework import generics, permissions
 from rest_framework.exceptions import ValidationError
-from .serializers import QuestionSerializer, TagSerializer
+from .serializers import QuestionSerializer, SolutionSerializer, TagSerializer
 
 # Display the questions specific to user or the user login page
 def homepage(request):
@@ -285,3 +285,18 @@ class CreateTag(generics.CreateAPIView):
         if self.get_queryset().exists():
             raise ValidationError(f"The tag {self.kwargs['name']} already exists")
         serializer.save(name=self.kwargs['name'])
+
+class SolutionList(generics.ListCreateAPIView):
+    serializer_class = SolutionSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        question = Question.objects.get(pk=self.kwargs.get('question_id'))
+        print(question)
+        return Solution.objects.filter(question = question)
+
+    def perform_create(self, serializer):
+        question = Question.objects.get(pk=self.kwargs.get('question_id'))
+        if question.user != self.request.user:
+            raise ValidationError("Check the question id in url")
+        serializer.save(question = question)

@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Question, Tag, Solution
 
 class QuestionSerializer(serializers.ModelSerializer):
-    # Making user not read-only
+    # Making user read-only field
     user = serializers.ReadOnlyField(source='user.username')
     user_id = serializers.ReadOnlyField(source='user.id')    
 
@@ -14,3 +14,10 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = ['id', 'description']
+
+class SolutionSerializer(serializers.ModelSerializer):
+    question_title = serializers.ReadOnlyField(source='question.title')
+
+    class Meta:
+        model = Solution
+        fields = ['id', 'question_title', 'title', 'language', 'program', 'notes', 'link', 'date_added']
