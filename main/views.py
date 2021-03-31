@@ -273,18 +273,16 @@ class QuestionList(generics.ListCreateAPIView):
         serializer.save(user = self.request.user) 
 
 # Create a new tag from API call with ../api/tag/<name>
-class CreateTag(generics.CreateAPIView):
+class CreateTag(generics.ListCreateAPIView):
+    queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = [permissions.IsAdminUser]
-    
-    # Get tag object corresponding to the tag name from kwargs
-    def get_queryset(self):
-        return Tag.objects.filter(name=self.kwargs['name'])
 
     def perform_create(self, serializer):
-        if self.get_queryset().exists():
-            raise ValidationError(f"The tag {self.kwargs['name']} already exists")
-        serializer.save(name=self.kwargs['name'])
+        # if not serializer.is_valid():
+        #     raise ValidationError(f"The new tag {serializer.validated_data['name']} already exists")
+        if serializer.is_valid():
+            serializer.save()
 
 class SolutionList(generics.ListCreateAPIView):
     serializer_class = SolutionSerializer
