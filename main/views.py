@@ -257,6 +257,7 @@ def delete_solution(request, question_id, solution_id):
 
 
 # REST API views ---------------------------------------------------------------------
+# List all the public questions and user-private questions
 class QuestionList(generics.ListCreateAPIView):
     serializer_class = QuestionSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -272,6 +273,7 @@ class QuestionList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user = self.request.user) 
 
+# Retrieve, Update and delete a question from given pk
 class QuestionRetrieve(generics.RetrieveUpdateDestroyAPIView):
     # queryset = Question.objects.all()
     serializer_class = QuestionSerializer
@@ -285,9 +287,6 @@ class QuestionRetrieve(generics.RetrieveUpdateDestroyAPIView):
         else:
             return None
 
-    def perform_create(self, serializer):
-        serializer.save(user = self.request.user) 
-
 # Create a new tag from API call with ../api/tag/<name>
 class CreateTag(generics.ListCreateAPIView):
     queryset = Tag.objects.all()
@@ -300,6 +299,13 @@ class CreateTag(generics.ListCreateAPIView):
         if serializer.is_valid():
             serializer.save()
 
+# Delete a tag from pk as url
+class DeleteTag(generics.RetrieveDestroyAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+# List all the solutions for a question and create new solution
 class SolutionList(generics.ListCreateAPIView):
     serializer_class = SolutionSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -314,3 +320,13 @@ class SolutionList(generics.ListCreateAPIView):
         if question.user != self.request.user:
             raise ValidationError("Check the question id in url")
         serializer.save(question = question)
+
+# Retrieve a specific solution and update or delete it
+class SolutionRetrieve(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = SolutionSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        question = Question.objects.get(pk=self.kwargs.get('question_id'))
+        print(question)
+        return Solution.objects.filter(question = question)
