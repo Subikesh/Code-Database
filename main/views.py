@@ -272,6 +272,22 @@ class QuestionList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user = self.request.user) 
 
+class QuestionRetrieve(generics.RetrieveUpdateDestroyAPIView):
+    # queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        # If user views anonymously, public questions are shown
+        query = Question.objects.filter(pk=self.kwargs.get('pk'))
+        if query.filter(access="Public").exists() or (self.request.user.is_authenticated and query.filter(user=self.request.user).exists()):
+            return query
+        else:
+            raise ValidationError("Can't find a relevent question! Check question_id")
+
+    def perform_create(self, serializer):
+        serializer.save(user = self.request.user) 
+
 # Create a new tag from API call with ../api/tag/<name>
 class CreateTag(generics.ListCreateAPIView):
     queryset = Tag.objects.all()

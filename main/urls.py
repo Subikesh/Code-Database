@@ -23,7 +23,8 @@ urlpatterns = [
     path('delete_solution/<int:question_id>/<int:solution_id>', views.delete_solution, name="delete_solution"),
 
     # API urls
-    path('api/questions/', views.QuestionList.as_view(), name="api_question"),
+    path('api/questions/', views.QuestionList.as_view(), name="api_questions"),
+    path('api/questions/<int:pk>', views.QuestionRetrieve.as_view(), name="api_view_question"),
     path('api/solution/<int:question_id>/add', views.SolutionList.as_view(), name="api_solution"),
     path('api/tag/', views.CreateTag.as_view(), name="api_create_tag"),
 ]
