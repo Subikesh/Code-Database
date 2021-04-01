@@ -283,7 +283,7 @@ class QuestionRetrieve(generics.RetrieveUpdateDestroyAPIView):
         if query.filter(access="Public").exists() or (self.request.user.is_authenticated and query.filter(user=self.request.user).exists()):
             return query
         else:
-            raise ValidationError("Can't find a relevent question! Check question_id")
+            return None
 
     def perform_create(self, serializer):
         serializer.save(user = self.request.user) 
