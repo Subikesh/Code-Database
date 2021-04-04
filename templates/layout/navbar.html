@@ -11,18 +11,18 @@
             </li>
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a href="profile" class="nav-link {{user_page}}">@{{user.username}}</a>
+                    <a href="{% url 'main:profile' %}" class="nav-link {{user_page}}">@{{user.username}}</a>
                 </li>
                 <li class="nav-item">
-                    <a href="logout" class="nav-link">Logout</a>
+                    <a href="{% url 'main:logout' %}" class="nav-link">Logout</a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a href="register" class="nav-link {{register_page}}">Register</a>
+                    <a href="{% url 'main:register' %}" class="nav-link {{register_page}}">Register</a>
                 </li>
             {% endif %}
             <li class="nav-item">
-                <a href="contact" class="nav-link {{login_page}}">Contact</a>
+                <a href="#" class="nav-link {{login_page}}">Contact</a>
             </li>
         </ul>
     </div>
