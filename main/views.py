@@ -3,7 +3,7 @@ from django.http import HttpResponse, Http404, JsonResponse, request
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.db.models import Q
-from django import forms
+from django.contrib.auth.decorators import login_required
 from .forms import QuestionForm
 from .models import Question, Solution, Tag
 
@@ -80,27 +80,21 @@ def register(request):
     return render(request, "account/register.html", context)
 
 # User logout
+@login_required(login_url='/')
 def logout(request):
-    if not request.user.is_authenticated:
-        messages.error(request, "You are not logged in yet.")
-        return redirect("/")
     current_user = request.user
     auth.logout(request)
     messages.success(request, f"@{current_user} has been logged out.")
     return redirect("/")
 
 # Editing and updating user information
+@login_required(login_url='/')
 def profile(request):
-    if not request.user.is_authenticated:
-        messages.error(request, "You are not logged in yet.")
-        return redirect("/")
     context = {'user_page': "active"}
     return render(request, "account/profile.html", context)
 
+@login_required(login_url='/')
 def edit_profile(request):
-    if not request.user.is_authenticated:
-        messages.error(request, "You are not logged in yet.")
-        return redirect("/")
     context = {'user_page': "active"}
     if request.method == "POST":
         current_user = request.user
@@ -114,10 +108,8 @@ def edit_profile(request):
     return render(request, "account/edit_profile.html", context)
 
 # Deleting user account
+@login_required(login_url='/')
 def delete(request):
-    if not request.user.is_authenticated:
-        messages.error(request, "You are not logged in yet.")
-        return redirect("/")
     current_user = request.user
     current_user.delete()
     logout(request)
@@ -125,10 +117,8 @@ def delete(request):
     return redirect("/")
 
 # Adding a new question or editing an existing question
+@login_required(login_url='/')
 def add_question(request, question_id = None):
-    if not request.user.is_authenticated:
-        messages.error(request, "Please Login to add question.")
-        return redirect("/")
     context = {}
     context['option'] = "Edit" if question_id else "Add"
     question = get_object_or_404(Question, pk=question_id) if question_id else None
@@ -154,10 +144,8 @@ def add_question(request, question_id = None):
     return render(request, "questions/question.html", context)
 
 # Delete question
+@login_required(login_url='/')
 def delete_question(request, question_id):
-    if not request.user.is_authenticated:
-        messages.error(request, "Please Login to delete question.")
-        return redirect("/")
     question = get_object_or_404(Question, pk=question_id)
     question.delete()
     return redirect('/')
@@ -205,10 +193,8 @@ def add_tag(request):
     return JsonResponse(data)
 
 # View full details of the question and add and edit solution for that question.
+@login_required(login_url='/')
 def view_question(request, question_id, solution_id=None):
-    if not request.user.is_authenticated:
-        messages.error(request, "Please log in to view questions")
-        return redirect("/")
     context = {}
     question = get_object_or_404(Question, pk=question_id)
     solutions = Solution.objects.filter(question = question).order_by('-date_added')
@@ -247,10 +233,8 @@ def view_question(request, question_id, solution_id=None):
     return render(request, "questions/display_question.html", context)
 
 # Delete solution
+@login_required(login_url='/')
 def delete_solution(request, question_id, solution_id):
-    if not request.user.is_authenticated:
-        messages.error(request, "Please Login to delete solution.")
-        return redirect("/")
     solution = get_object_or_404(Solution, pk=solution_id)
     solution.delete()
     return redirect(f"/questions/{question_id}")
