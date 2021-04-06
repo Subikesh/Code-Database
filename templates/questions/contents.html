@@ -46,7 +46,7 @@
                                 {% endif %}
                                 <div class="question-card-tags mb-3">
                                     {% for tag_name in question.tag.all %}
-                                        <a href="{% url 'main:homepage' %}?tag={{tag_name.pk}}" class="badge badge-secondary">{{tag_name.name}}</a>
+                                        <a href="{% url 'main:homepage' %}?tag={{tag_name.pk}}" class="badge badge-secondary" title="View all {{tag_name.name}} questions">{{tag_name.name}}</a>
                                     {% endfor %}
                                 </div>    
                                 <a class="icon" {% if question.link %} href="{{question.link}}" target="_blank" {% else %} href="questions/{{question.pk}}"     {% endif %}"><i class="fa fa-arrow-circle-right fa-lg"></i></a>
@@ -75,7 +75,7 @@
                             {% endif %}
                             <div class="question-card-tags mb-3">
                                 {% for tag_name in question.tag.all %}
-                                    <a href="{% url 'main:homepage' %}?tag={{tag_name.pk}}" class="badge badge-secondary">{{tag_name.name}}</a>
+                                    <a href="{% url 'main:homepage' %}?tag={{tag_name.pk}}" class="badge badge-secondary" title="View all {{tag_name.name}} questions">{{tag_name.name}}</a>
                                 {% endfor %}
                             </div>    
                             <a class="icon" {% if question.link %} href="{{question.link}}" target="_blank" {% else %} href="questions/{{question.pk}}"     {% endif %}"><i class="fa fa-arrow-circle-right fa-lg"></i></a>

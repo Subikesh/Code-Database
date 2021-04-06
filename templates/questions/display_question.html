@@ -9,7 +9,7 @@
         <a href="{% url 'main:make_private' question.id %}" class="btn btn-info float-right" title="Copy this question to your profile and add your solutions there">Make your copy</a>
         {% endif %}
         {% if question.link %}
-        <a href="{{question.link}}" class="btn btn-primary float-right mr-2" target="_blank">Goto Link</a>
+        <a href="{{question.link}}" class="btn btn-primary float-right mr-2" target="_blank" title="Open the original question page">Goto Link</a>
         {% endif %}
         <h1>{{question.title}}</h1>
         <strong class="bg-{{question.difficulty|lower}} mr-3">{{question.difficulty}}</strong>
@@ -27,7 +27,7 @@
         {% if question.tag.all %}
             <i> Related Tags: </i>
             {% for tag_name in question.tag.all %}
-                <a href="{% url 'main:homepage' %}?tag={{tag_name.pk}}" class="badge badge-dark">{{tag_name.name}}</a>
+                <a href="{% url 'main:homepage' %}?tag={{tag_name.pk}}" class="badge badge-dark" target="_blank" title="View all {{tag_name.name}} questions">{{tag_name.name}}</a>
             {% endfor %}
         {% endif %}
         <h2>Examples</h2>
@@ -46,7 +46,7 @@
                             <form action="{% url 'main:edit_solution' question.pk solution.pk%}" method="post">
                                 {% csrf_token %}
                                 {% if solution.link %}
-                                    <a href="{{solution.link}}" class="btn btn-primary float-right mr-2">Goto Solution Link</a>
+                                    <a href="{{solution.link}}" class="btn btn-primary float-right mr-2" title="Open the original solution link" target="_blank">Goto Solution Link</a>
                                 {% endif %}
                                 <div class="form-title form-group d-none">
                                     <div class="row">
