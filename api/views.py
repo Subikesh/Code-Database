@@ -4,6 +4,15 @@ from rest_framework import generics, permissions
 from rest_framework.exceptions import ValidationError
 from .serializers import QuestionSerializer, SolutionSerializer, TagSerializer
 
+# Custom permission to check if the question's owner is trying to update the question
+class IsOwnerOrReadOnly(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        # Allows GET, HEAD or OPTIONS requests
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        # If current user is the object user
+        return obj.user == request.user
+
 # List all the public questions and user-private questions
 class QuestionList(generics.ListCreateAPIView):
     serializer_class = QuestionSerializer
@@ -24,7 +33,7 @@ class QuestionList(generics.ListCreateAPIView):
 class QuestionRetrieve(generics.RetrieveUpdateDestroyAPIView):
     # queryset = Question.objects.all()
     serializer_class = QuestionSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly&IsOwnerOrReadOnly]
 
     def get_queryset(self):
         # If user views anonymously, public questions are shown
@@ -34,7 +43,7 @@ class QuestionRetrieve(generics.RetrieveUpdateDestroyAPIView):
         else:
             return None
 
-# Create a new tag from API call with ../api/tag/<name>
+# Create a new tag from API call with ../api/tag/
 class CreateTag(generics.ListCreateAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
@@ -71,7 +80,7 @@ class SolutionList(generics.ListCreateAPIView):
 # Retrieve a specific solution and update or delete it
 class SolutionRetrieve(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SolutionSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly&IsOwnerOrReadOnly]
 
     def get_queryset(self):
         question = Question.objects.get(pk=self.kwargs.get('question_id'))
