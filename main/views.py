@@ -121,14 +121,19 @@ def add_question(request, question_id = None):
     if request.method == "POST":
         form = QuestionForm(request.POST, user=request.user, instance=question)
         if form.is_valid():
-            if not question_id:
+            if question_id is None:
                 instance = form.save(commit=False)
                 instance.user = request.user
                 instance.save()
                 form.save_m2m()
+                messages.success(request, f"Question {request.POST.get('title')} is saved")
             else:
-                form.save()
-            messages.success(request, f"Question {request.POST.get('title')} is saved")
+                # Check if question is created my current user
+                if question.user != request.user:
+                    messages.error(request, "You cannot edit a public question. Make it private to make further changes.")
+                else:
+                    form.save()
+                    messages.success(request, f"Question {request.POST.get('title')} is saved")
         else:
             for error in form.errors.values():
                 messages.error(request, error.as_text()[2:])
@@ -142,15 +147,15 @@ def add_question(request, question_id = None):
 # Delete question
 @login_required(login_url='/')
 def delete_question(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
+    question = get_object_or_404(Question.objects.filter(user=request.user), pk=question_id)
     question.delete()
     return redirect('/')
 
 # Make private question to public
 def make_public(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    print("Send notification to staffs or admin(me) and provide public access")
-    permission = True # Change it
+    question = get_object_or_404(Question.objects.filter(user=request.user), pk=question_id)
+    print("Sending notification to staffs or admin to provide public access...")
+    permission = True # If the permission is granted by staffs
     if permission:
         question.access = "Public"
         question.save()
@@ -231,6 +236,7 @@ def view_question(request, question_id, solution_id=None):
 # Delete solution
 @login_required(login_url='/')
 def delete_solution(request, question_id, solution_id):
-    solution = get_object_or_404(Solution, pk=solution_id)
+    # Check if the solution user tries to delete was created my the user
+    solution = get_object_or_404(Solution.objects.filter(question__in=Question.objects.filter(user=request.user)), pk=solution_id)
     solution.delete()
     return redirect(f"/questions/{question_id}")

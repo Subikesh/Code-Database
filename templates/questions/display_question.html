@@ -2,8 +2,12 @@
 
 {% block content %}
     <div class="container">
+        {% if question.user == user %}
         <a href="{% url 'main:edit_question' question.id %}" class="btn btn-info float-right">Edit <i class="fas fa-edit"></i></a>
         <a href="{% url 'main:delete_question' question.id %}" class="btn btn-danger float-right mr-2">Delete <i class="fas fa-trash-alt"></i></a>
+        {% else %}
+        <a href="{% url 'main:make_private' question.id %}" class="btn btn-info float-right" title="Copy this question to your profile and add your solutions there">Make your copy</a>
+        {% endif %}
         {% if question.link %}
         <a href="{{question.link}}" class="btn btn-primary float-right mr-2" target="_blank">Goto Link</a>
         {% endif %}
@@ -93,7 +97,7 @@
                 </div>  <!-- Solution card -->
             {% endfor %}
 
-
+            {% if question.user == user %}
             <div class="card mt-4">
                 <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#addsolution" aria-expanded="false" aria-controls="collapseOne">
                     <h5 class="mb-0">Add Solution</h5>
@@ -153,6 +157,7 @@
                     </div>
                 </div>
             </div>  <!-- Solution card -->
+            {% endif %}
 
         </div>  <!-- Accordian -->
     </div>
