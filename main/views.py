@@ -199,6 +199,8 @@ def view_question(request, question_id, solution_id=None):
     context = {}
     question = get_object_or_404(Question, pk=question_id)
     solutions = Solution.objects.filter(question = question).order_by('-date_added')
+    if question.user != request.user:
+        solutions.filter(access="Public")
     if request.method == "POST":
         title           = request.POST.get('soln-title')
         if not title:

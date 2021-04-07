@@ -35,8 +35,13 @@ class Question(models.Model):
         return self.title
 
 class Solution(models.Model):
+    access_choices = [
+        ("Private", "Private"),
+        ("Public", "Public")
+    ]
     question        = models.ForeignKey(Question, verbose_name="Question", on_delete = models.CASCADE, related_name='solutions')
     title           = models.CharField(max_length = 100)
+    access          = models.CharField(max_length = 10, choices = access_choices, default = "Private")
     language        = models.CharField(max_length = 20)
     program         = models.TextField(null = True, blank = True)
     notes           = models.TextField(null = True, blank = True)
