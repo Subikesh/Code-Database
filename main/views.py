@@ -152,8 +152,18 @@ def delete_question(request, question_id):
     return redirect('/')
 
 # Make private question to public
-def make_public(request, question_id):
+@login_required(login_url='/')
+def make_public(request, question_id, solution_id=None):
     question = get_object_or_404(Question.objects.filter(user=request.user), pk=question_id)
+    if solution_id is not None:
+        # Make the solution public
+        solution = get_object_or_404(Solution.objects.filter(access='Private', 
+            question__in = Question.objects.filter(access="Public")
+            ), pk=solution_id)
+        solution.access = "Public"
+        solution.save()
+        return redirect(f"/question/{question_id}")
+    # Make question public
     print("Sending notification to staffs or admin to provide public access...")
     permission = True # If the permission is granted by staffs
     if permission:
@@ -164,6 +174,7 @@ def make_public(request, question_id):
     return redirect(f'/questions/{question_id}')
 
 # Make public questions to private
+@login_required(login_url='/')
 def make_private(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     # Copying the tags of old to new object
