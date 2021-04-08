@@ -209,8 +209,8 @@ def view_question(request, question_id, solution_id=None):
         language        = request.POST.get('language')
         code            = request.POST.get('code')
         link            = request.POST.get('link')
-        print(title,"Notes", description)
-        print('Code', code, language)
+        # print(title,"Notes", description)
+        # print('Code', code, language)
         if solution_id:
             # Edit solution
             new_solution = get_object_or_404(Solution, pk=solution_id)
