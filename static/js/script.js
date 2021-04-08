@@ -53,7 +53,7 @@ for (let i = 0; i < edits.length; i++) {
     // });
 }
 
-// Sort the options in select tags
+// Sort the options in select tags --------------------------------------------
 var sortOptions = function(options) {
     Array.prototype.sort.call(options, function(a, b) {
         if (a.text <= b.text)   return -1
@@ -63,7 +63,7 @@ var sortOptions = function(options) {
 var optionList = document.getElementById("id_tag").options;
 sortOptions(optionList);
 
-// Adding new tags for questions
+// Adding new tags for questions -----------------------------------------------
 var tagInput = document.getElementById("tag-name");
 
 var addNewTag = function() {

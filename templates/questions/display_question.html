@@ -19,7 +19,7 @@
         {% else %}
             <button class="btn badge badge-success" title="This question is publicly available" data-toggle="modal" data-target="#make-private-modal"><i class="fa fa-check"></i> Public</button>
         {% endif %}
-
+        <i class="mr-3"> Author: @{{question.user}}</i>
         <hr>
         <p>
             {{ question.description }}
@@ -86,7 +86,8 @@
                                 <div class="parent col-xs-12">
                                     <div class="editor">{{solution.program}}</div>
                                 </div>
-                                <input class="ace_control" type="hidden" name="code">
+                                <input class="ace_control" type="hidden" name="code" value="{{solution.program}}">
+                                <br>
                                 <button class="edit-solution btn btn-primary">Edit solution</button>
                                 <button type="submit" class="submit-solution btn btn-primary d-none">Save Solution</button>
                                 <a href="{% url 'main:delete_solution' question.pk solution.pk %}" class="btn btn-danger">Delete solution</a>
@@ -150,6 +151,7 @@
                                     <div class="editor"></div>
                                 </div>
                                 <input class="ace_control" type="hidden" name="code">
+                                <br>
                                 <button type="submit" class="submit-solution btn btn-primary">Save solution</button>
                                 <input type="reset" class="btn btn-danger">
                             </form>
