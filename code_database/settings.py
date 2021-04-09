@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -26,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'code-database.herokuapp.com']
 
 
 # Application definition
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -81,11 +84,12 @@ WSGI_APPLICATION = 'code_database.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'Coding',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': 'localhost'
+        # 'USER': 'postgres',
+        # 'PASSWORD': '1234',
+        # 'HOST': 'localhost'
     }
 }
 
@@ -133,3 +137,6 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+django_heroku.settings(locals())
