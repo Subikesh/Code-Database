@@ -84,12 +84,12 @@ WSGI_APPLICATION = 'code_database.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.postgresql',
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'Coding',
-        # 'USER': 'postgres',
-        # 'PASSWORD': '1234',
-        # 'HOST': 'localhost'
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'HOST': 'localhost'
     }
 }
 
