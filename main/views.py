@@ -101,6 +101,7 @@ def edit_profile(request):
         if form.get('password') != '':
             current_user.set_password(form.get('password'))
         current_user.save()
+        return redirect('main:profile');
     return render(request, "account/edit_profile.html", context)
 
 # Deleting user account

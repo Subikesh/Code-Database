@@ -4,15 +4,15 @@ from . import views
 app_name = 'main'
 urlpatterns = [
     path('', views.homepage, name="homepage"),
-    path('register/', views.register, name="register"),
+    path('register', views.register, name="register"),
     path('login', views.homepage, name="login"),
-    path('logout/', views.logout, name="logout"),
-    path('profile/', views.profile, name="profile"),
-    path('edit_profile/', views.edit_profile, name='edit_profile'),
-    path('delete/', views.delete, name="delete"),
+    path('logout', views.logout, name="logout"),
+    path('profile', views.profile, name="profile"),
+    path('edit_profile', views.edit_profile, name='edit_profile'),
+    path('delete', views.delete, name="delete"),
 
-    path('add_tag/', views.add_tag, name="add_question_tag"),
-    path('add_question/', views.add_question, name="add_question"),
+    path('add_tag', views.add_tag, name="add_question_tag"),
+    path('add_question', views.add_question, name="add_question"),
     path('add_question/<int:question_id>/', views.add_question, name="edit_question"),
     path('delete_question/<int:question_id>/', views.delete_question, name="delete_question"),
     path('make_public/<int:question_id>/', views.make_public, name='make_public'),

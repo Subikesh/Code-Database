@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container">
         <h1 class="page-header">Your Profile</h1>
-        <form action="profile" method="post">
+        <form action="" method="post">
             {% csrf_token %}
             <div class="form-row">
                 <div class="form-group col-md-6">
@@ -40,7 +40,7 @@
             </div>
 
             <button class="btn btn-primary" type="submit">Edit profile</button> 
-            <a class="btn btn-danger" href="delete">Delete account</a>
+            <a class="btn btn-danger" href="{% url 'main:delete' %}">Delete account</a>
         </form>        
     </div>
 {% endblock %}
