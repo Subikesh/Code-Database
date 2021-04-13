@@ -220,7 +220,7 @@ def view_question(request, question_id, solution_id=None):
         title           = request.POST.get('soln-title')
         if not title:
             title = "Solution " + str(len(solutions)+1)
-        description     = request.POST.get('soln-desc').strip()
+        description     = request.POST.get('soln-desc')
         language        = request.POST.get('language')
         code            = request.POST.get('code')
         link            = request.POST.get('link')
