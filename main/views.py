@@ -1,9 +1,10 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse, Http404, JsonResponse, request
+from django.http import HttpResponseRedirect, Http404, JsonResponse, request
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from django.urls.base import reverse
 from .forms import QuestionForm
 from .models import Question, Solution, Tag
 
@@ -128,6 +129,7 @@ def add_question(request, question_id = None):
                 instance.save()
                 form.save_m2m()
                 messages.success(request, f"Question {request.POST.get('title')} is saved")
+                return HttpResponseRedirect(reverse('main:view_question', args=[instance.pk,]))
             else:
                 # Check if question is created my current user
                 if question.user != request.user:
@@ -135,6 +137,7 @@ def add_question(request, question_id = None):
                 else:
                     form.save()
                     messages.success(request, f"Question {request.POST.get('title')} is saved")
+
         else:
             for error in form.errors.values():
                 messages.error(request, error.as_text()[2:])
@@ -217,7 +220,7 @@ def view_question(request, question_id, solution_id=None):
         title           = request.POST.get('soln-title')
         if not title:
             title = "Solution " + str(len(solutions)+1)
-        description     = request.POST.get('soln-desc')
+        description     = request.POST.get('soln-desc').strip()
         language        = request.POST.get('language')
         code            = request.POST.get('code')
         link            = request.POST.get('link')
