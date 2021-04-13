@@ -44,6 +44,9 @@ a:hover {
 }
 
 /* Questions page */
+.desc-p {
+    white-space: pre-wrap;
+}
 .icon {
     color: #007bff;
 }
