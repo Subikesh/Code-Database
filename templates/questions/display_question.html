@@ -18,8 +18,8 @@
             <button class="btn badge badge-danger" title="Only you can view this question" data-toggle="modal" data-target="#make-public-modal"><i class="fa fa-lock"></i> Private</button>
         {% else %}
             <button class="btn badge badge-success" title="This question is publicly available" data-toggle="modal" data-target="#make-private-modal"><i class="fa fa-check"></i> Public</button>
+            <i class="mr-3"> Author: @{{question.user}}</i>
         {% endif %}
-        <i class="mr-3"> Author: @{{question.user}}</i>
         <hr>
         <p class='desc-p'>
             {{ question.description }}
@@ -31,7 +31,7 @@
             {% endfor %}
         {% endif %}
         <h2>Examples</h2>
-        <pre>{{ question.examples }} </pre>
+        <pre class="desc-p">{{ question.examples }} </pre>
         <!-- Cards collapse using bootstrap -->
         <!-- <button class="btn btn-primary float-right"><i class="fa fa-plus"></i> Add solution</button> -->
         <h2>Solutions</h2>
@@ -39,6 +39,14 @@
             {% for solution in solutions %}
                 <div class="card mt-4">
                     <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#solution{{forloop.counter}}" aria-expanded="false" aria-controls="collapseOne">
+                        {% if question.access == "Public" %}
+                            {% if solution.access == "Public" %}
+                            <button class="btn badge badge-success float-right" title="This solution is publicly available" data-toggle="modal" data-target="#make-soln-private"><i class="fa fa-check"></i> Public</button>
+                            <i class="mr-3 float-right"> Author: @{{question.user}}</i>
+                            {% else %}
+                            <button class="btn badge badge-danger float-right" title="Only you can view this solution" data-toggle="modal" data-target="#make-soln-public"><i class="fa fa-lock"></i> Private</button>
+                            {% endif %}
+                        {% endif %}
                         <h5 class="mb-0">{{solution.title}} </h5>
                     </div>
                     <div id="solution{{forloop.counter}}" class="solution-section collapse" aria-labelledby="headingOne" data-parent="#accordion">
