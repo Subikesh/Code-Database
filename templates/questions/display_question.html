@@ -80,11 +80,11 @@
                                         <option value="solarized_dark">Solarized Dark</option>
                                     </select>
                                     <select name="language" class="lang-select form-control col-sm-3 ml-auto mr-2 mb-3" value="{{solution.language}}">
-                                        <option value="python" {% ifequal solution.language 'python' %} selected {% endifequal %}>python</option>
-                                        <option value="c_cpp"{% ifequal solution.language 'c_cpp' %} selected {% endifequal %}>C/C++</option>
-                                        <option value="javascript"{% ifequal solution.language 'javascript' %} selected {% endifequal %}>JavaScript</option>
-                                        <option value="java"{% ifequal solution.language 'java' %} selected {% endifequal %}>Java</option>
-                                        <option value="csharp"{% ifequal solution.language 'csharp' %} selected {% endifequal %}>C#</option>
+                                        <option value="python" {% if solution.language == 'python' %} selected {% endif %}>python</option>
+                                        <option value="c_cpp"{% if solution.language == 'c_cpp' %} selected {% endif %}>C/C++</option>
+                                        <option value="javascript"{% if solution.language == 'javascript' %} selected {% endif %}>JavaScript</option>
+                                        <option value="java"{% if solution.language == 'java' %} selected {% endif %}>Java</option>
+                                        <option value="csharp"{% if solution.language == 'csharp' %} selected {% endif %}>C#</option>
                                     </select>
                                     <span class="input-group col-sm-2 mr-2 mb-3">
                                         <input type="text" class="size-select form-control" placeholder="font-size: 18">
