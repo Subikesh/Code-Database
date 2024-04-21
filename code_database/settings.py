@@ -35,14 +35,14 @@ ALLOWED_HOSTS = ['codedatabase.pythonanywhere.com', 'localhost']
 
 INSTALLED_APPS = [
     'main.apps.MainConfig',
+    'api.apps.ApiConfig',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api',
-    'rest_framework',
 ]
 
 MIDDLEWARE = [
