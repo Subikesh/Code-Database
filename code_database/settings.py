@@ -27,7 +27,7 @@ load_dotenv(f'{BASE_DIR}/.env')
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('IS_RELEASE') != 'True'
 
 ALLOWED_HOSTS = ['codedatabase.pythonanywhere.com', 'localhost']
 
@@ -82,7 +82,15 @@ WSGI_APPLICATION = 'code_database.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
+    # 'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'codedatabase',
+        'USER': os.getenv('DB_USERNAME'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': 'CodeDatabase.mysql.pythonanywhere-services.com',
+        'PORT': '3306'
+    }
 }
 
 # Password validation
