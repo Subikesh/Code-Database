@@ -60,8 +60,10 @@ var sortOptions = function(options) {
         else                    return 1
     });
 };
-var optionList = document.getElementById("id_tag").options;
-sortOptions(optionList);
+var selector = document.getElementById("id_tag");
+if (selector != null) {
+    sortOptions(selector.options);
+}
 
 // Adding new tags for questions -----------------------------------------------
 var tagInput = document.getElementById("tag-name");
