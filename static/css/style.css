@@ -77,7 +77,6 @@ a:hover {
 
 /* Ace-Editor */
 .parent {
-    min-height: 550px;
     width: 100%;
     position: relative;
     display: inline-block;
@@ -88,6 +87,7 @@ a:hover {
     right: 0;
     bottom: 0;
     left: 0;
+    height: 550px;
 }
 .card-group {
     display: inline;
