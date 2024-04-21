@@ -68,6 +68,7 @@ var tagInput = document.getElementById("tag-name");
 
 var addNewTag = function() {
     let data = tagInput.value;
+    console.log('Adding new tag...')
     $.ajax({
         url: "/add_tag",
         data: {

@@ -243,7 +243,7 @@ ace.define("ace/lib/dom",["require","exports","module","ace/lib/useragent"], fun
 "use strict";
 
 var useragent = require("./useragent"); 
-var XHTML_NS = "http://www.w3.org/1999/xhtml";
+var XHTML_NS = "https://www.w3.org/1999/xhtml";
 
 exports.buildDom = function buildDom(arr, parent, refs) {
     if (typeof arr == "string" && arr) {
