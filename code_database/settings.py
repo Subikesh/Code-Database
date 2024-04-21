@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('IS_RELEASE') != 'True'
 
-ALLOWED_HOSTS = ['codedatabase.pythonanywhere.com', 'localhost']
+ALLOWED_HOSTS = ['codedatabase.pythonanywhere.com', '127.0.0.1']
 
 # Application definition
 
@@ -84,12 +84,12 @@ WSGI_APPLICATION = 'code_database.wsgi.application'
 DATABASES = {
     # 'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'CodeDatabase$default',
-        'USER': os.getenv('DB_USERNAME'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': 'CodeDatabase.mysql.pythonanywhere-services.com',
-        'PORT': '3306'
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Coding',
+        'USER': 'postgres',
+        'PASSWORD': 'admin123',
+        'HOST': '127.0.0.1',
+        'PORT': ''
     }
 }
 
