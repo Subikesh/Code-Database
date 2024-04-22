@@ -1,4 +1,5 @@
 // Getting the basic editor set
+/* Ace editor is not working properly in production. Until then using normal textarea
 let editors = document.getElementsByClassName("editor");
 
 // Elements for changing theme, language and font-size
@@ -63,3 +64,4 @@ for (let i = 0; i < editorObjects.length; i++) {
     editor.addEventListener("load", () => copyCode(editor, codeInput));
     editor.addEventListener("change", () => copyCode(editor, codeInput));
 }
+*/

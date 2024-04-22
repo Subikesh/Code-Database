@@ -21,6 +21,8 @@ if (pwd && cnf) {
 var titles = document.getElementsByClassName("form-title");
 var links = document.getElementsByClassName("form-link");
 var notes = document.getElementsByClassName("form-description");
+var codes = document.getElementsByClassName("form-code");
+var languages = document.getElementsByClassName("lang-select");
 var submits = document.getElementsByClassName("submit-solution");
 var edits = document.getElementsByClassName("edit-solution");
 // var cancels = document.getElementsByClassName("cancel-edit");
@@ -36,8 +38,10 @@ for (let i = 0; i < edits.length; i++) {
         display(titles[i]);
         display(links[i]);
         display(notes[i]);
+        languages[i].disabled = false;
         notes[i].disabled = notes[i].readOnly = false;
         notes[i].classList.replace("form-control-plaintext","form-control")
+        codes[i].disabled = codes[i].readOnly = false;
         event.preventDefault()
     });
     // Reset button is not working as expected
