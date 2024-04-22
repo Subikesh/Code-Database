@@ -83,18 +83,26 @@ WSGI_APPLICATION = 'code_database.wsgi.application'
 
 DATABASES = {
     # 'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Coding',
-        'USER': 'postgres',
-        'PASSWORD': 'admin123',
-        'HOST': '127.0.0.1',
-        'PORT': ''
+     'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'codedatabase',
+        'USER': os.getenv('DB_USERNAME'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': 'CodeDatabase.mysql.pythonanywhere-services.com',
+        'PORT': '3306'
     }
 }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'Coding',
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'admin123',
+    #     'HOST': '127.0.0.1',
+    #     'PORT': ''
+    # }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
