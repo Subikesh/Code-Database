@@ -85,7 +85,7 @@ DATABASES = {
     # 'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
      'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'CodeDatabase@default',
+        'NAME': 'CodeDatabase$default',
         'USER': os.getenv('DB_USERNAME'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': 'CodeDatabase.mysql.pythonanywhere-services.com',
