@@ -20,6 +20,32 @@ a:hover {
     margin-bottom: 25px;
 }
 
+/* Home page */
+body {
+    min-height: 100vh;
+    display: flex;
+    /* flex-grow: 1; */
+    flex-direction: column;
+}
+
+.social {
+    padding-top: 5vh;
+    padding-left: 2vw;
+}
+
+.social a {
+    font-size: 2rem;
+    margin-left: 20px;
+}
+
+.home-social {
+    margin-top: auto;
+    align-items: end;
+}
+.home-social a {
+    margin-right: 20px;
+}
+
 /* Toasts */
 .toasts {
     position: absolute;
