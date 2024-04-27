@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from main.models import Question, Solution, Tag
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, authentication
 from rest_framework.exceptions import ValidationError
 from .serializers import QuestionSerializer, SolutionSerializer, TagSerializer
 
@@ -19,6 +19,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 class QuestionList(generics.ListCreateAPIView):
     serializer_class = QuestionSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    authentication_classes = [authentication.TokenAuthentication]
 
     def get_queryset(self):
         # If user views anonymously, public questions are shown
@@ -37,6 +38,7 @@ class QuestionRetrieve(generics.RetrieveUpdateDestroyAPIView):
     # queryset = Question.objects.all()
     serializer_class = QuestionSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly & IsOwnerOrReadOnly]
+    authentication_classes = [authentication.TokenAuthentication]
 
     def get_queryset(self):
         # If user views anonymously, public questions are shown
@@ -52,7 +54,8 @@ class QuestionRetrieve(generics.RetrieveUpdateDestroyAPIView):
 class CreateTag(generics.ListCreateAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    authentication_classes = [authentication.TokenAuthentication]
 
     def perform_create(self, serializer):
         # if not serializer.is_valid():
@@ -66,12 +69,14 @@ class DeleteTag(generics.RetrieveDestroyAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = [permissions.IsAdminUser]
+    authentication_classes = [authentication.TokenAuthentication]
 
 
 # List all the solutions for a question and create new solution
 class SolutionList(generics.ListCreateAPIView):
     serializer_class = SolutionSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    authentication_classes = [authentication.TokenAuthentication]
 
     def get_queryset(self):
         question = Question.objects.get(pk=self.kwargs.get('question_id'))
@@ -89,6 +94,7 @@ class SolutionList(generics.ListCreateAPIView):
 class SolutionRetrieve(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SolutionSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly & IsOwnerOrReadOnly]
+    authentication_classes = [authentication.TokenAuthentication]
 
     def get_queryset(self):
         question = Question.objects.get(pk=self.kwargs.get('question_id'))

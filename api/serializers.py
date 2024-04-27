@@ -7,7 +7,8 @@ class SolutionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Solution
-        fields = ['id', 'question_title', 'title', 'language', 'program', 'notes', 'link', 'date_added']
+        fields = ('question_title', 'title', 'language', 'program', 'notes', 'link', 'date_added')
+        read_only_fields = ('id',)
 
 class QuestionSerializer(serializers.ModelSerializer):
     # Making user read-only field
@@ -18,15 +19,17 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ['id', 'user', 'user_id', 'title', 'access', 'description', 'link', 'difficulty', 'tag', 'examples', 'solution_count', 'solutions', 'date_added']
+        fields = ('user', 'user_id', 'title', 'access', 'description', 'link', 'difficulty', 'tag', 'examples', 'solution_count', 'solutions', 'date_added')
+        read_only_fields = ('id',)
 
 class TagSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(max_length=100, validators=[UniqueValidator(queryset=Tag.objects.all())])
+    name = serializers.CharField(max_length=100, validators=(UniqueValidator(queryset=Tag.objects.all()),))
     questions_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Tag
-        fields = ['id', 'name', 'description',  'questions_count']
+        fields = ('name', 'description',  'questions_count')
+        read_only_fields = ('id',)
     
     def get_questions_count(self, tag):
         return tag.questions.count()

@@ -27,7 +27,7 @@ class Question(models.Model):
     description     = models.TextField(null = True, blank = True)
     link            = models.URLField(null = True, blank = True)
     difficulty      = models.TextField(max_length = 10, choices = difficulty_choices)
-    tag             = models.ManyToManyField(Tag, related_name='questions')
+    tag             = models.ManyToManyField(Tag, related_name='questions', blank=True)
     examples        = models.TextField(null = True, blank = True)
     date_added      = models.DateTimeField(auto_now=True)
 
