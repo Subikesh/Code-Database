@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from main.models import Question, Solution, Tag
 from rest_framework import generics, permissions, authentication
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.exceptions import ValidationError
+from rest_framework.response import Response
 from .serializers import QuestionSerializer, SolutionSerializer, TagSerializer
 
 
@@ -100,3 +102,15 @@ class SolutionRetrieve(generics.RetrieveUpdateDestroyAPIView):
         question = Question.objects.get(pk=self.kwargs.get('question_id'))
         print(question)
         return Solution.objects.filter(question=question)
+
+@api_view(("GET",))
+@permission_classes((permissions.IsAuthenticated,))
+@authentication_classes((authentication.TokenAuthentication, authentication.SessionAuthentication))
+def user_details(request):
+    return Response({
+        'username': request.user.username,
+        'email': request.user.email,
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+        'date_joined': request.user.date_joined
+    })

@@ -12,4 +12,5 @@ urlpatterns = [
     path('tags/', views.CreateTag.as_view(), name="create_tag"),
     path('tag/', views.CreateTag.as_view(), name="create_tag"),
     path('tag/<int:pk>/', views.DeleteTag.as_view(), name="view_tag"),
+    path('user/', views.user_details, name="user_details")
 ]
