@@ -3,6 +3,8 @@ An application to store the data structures and algorithms questions and track y
 
 This application is done using django and a REST API is also created using django-rest-framework and is deployed on [codedatabase.pythonanywhere.com](https://codedatabase.pythonanywhere.com/).
 
+Feel free to check out my Android client application for CodeDatabase which consumes the Rest API declared in this project [here](https://github.com/Subikesh/CodeDatabase_android).
+
 ## Run the app
 
 To run the app, follow the below steps
